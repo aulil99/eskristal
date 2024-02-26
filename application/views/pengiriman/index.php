@@ -2,10 +2,10 @@
 
 <div class="row">
     <div class="col-sm-12 col-md-10">
-        <h4 class="mb-0"><i class="fa fa-truck"></i> Data Supplier</h4>
+        <h4 class="mb-0"><i class="fa fa-truck"></i> Pengiriman</h4>
     </div>
     <div class="col-sm-12 col-md-2">
-        <a href="<?= site_url('tambah_supplier'); ?>" class="btn btn-success btn-sm btn-block">Tambah Data</a>
+        <a href="<?= site_url('tambah_pengiriman'); ?>" class="btn btn-success btn-sm btn-block">Tambah Data</a>
     </div>
 </div>
 <hr class="mt-0" />
@@ -29,11 +29,17 @@ if ($this->session->flashdata('error')) {
         <thead class="thead-dark">
             <tr>
                 <th scope="col">#</th>
-                <th scope="col">ID Supplier</th>
-                <th scope="col">Nama Supplier</th>
+                <th scope="col">ID Pengiriman</th>
+                <th scope="col">Tanggal</th>
+                <th scope="col">Pelanggan</th>
+                <th scope="col">No HP</th>
                 <th scope="col">Alamat</th>
-                <th scope="col">Telp</th>
-                <th scope="col">Opsi</th>
+                <th scope="col">Kurir</th>
+                <th scope="col">No Kendaraan</th>
+                <th scope="col">Penerima</th>
+                <th scope="col">Keterangan</th>
+                <th scope="col">Status</th>
+                <th scope="col">Aksi</th>
             </tr>
         </thead>
         <tbody>

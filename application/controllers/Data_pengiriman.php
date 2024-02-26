@@ -38,7 +38,7 @@ class Data_pengiriman extends CI_Controller
             $this->form_validation->set_rules(
                 'date',
                 'Tanggal',
-                'required|callback_checkDateFormat',
+                'required',
                 array(
                     'required' => '{field} wajib diisi',
                     'checkDateFormat' => '{field} tidak valid'
@@ -111,7 +111,7 @@ class Data_pengiriman extends CI_Controller
             if ($this->form_validation->run() == TRUE) {
                 //tampung data ke variabel
                 $id = 'ID' . time();
-                $tgl = $this->security->xss_clean($this->input->post('date', TRUE));
+                $tgl = date('Y-m-d', strtotime(str_replace('/', '-', $this->security->xss_clean($this->input->post('date', TRUE)))));
                 $nama = $this->security->xss_clean($this->input->post('customer', TRUE));
                 $telp = $this->security->xss_clean($this->input->post('phone', TRUE));
                 $alamat = $this->security->xss_clean($this->input->post('alamat', TRUE));
@@ -125,10 +125,10 @@ class Data_pengiriman extends CI_Controller
                     'phone' => $telp,
                     'alamat' => $alamat,
                     'kurir' => $kurir,
-                    'no_kendaraan' => $plat,
+                    'no_kendaraan' => $plat
                 ];
 
-                $simpan = $this->m_pengiriman-->save('tbl_pengiriman', $data_simpan);
+                $simpan = $this->m_pengiriman->save('tbl_pengiriman', $data_simpan);
 
                 if ($simpan) {
                     $this->session->set_flashdata('success', 'Data Pengiriman berhasil ditambahkan..');
@@ -159,6 +159,16 @@ class Data_pengiriman extends CI_Controller
                 array(
                     'required' => '{field} wajib diisi',
                     'min_length' => '{field} tidak valid'
+                )
+            );
+
+            $this->form_validation->set_rules(
+                'date',
+                'Tanggal',
+                'required',
+                array(
+                    'required' => '{field} wajib diisi',
+                    'checkDateFormat' => '{field} tidak valid'
                 )
             );
 
@@ -264,7 +274,7 @@ class Data_pengiriman extends CI_Controller
             if ($this->form_validation->run() == TRUE) {
                 //tampung data ke variabel
                 $idPengiriman = $this->security->xss_clean($this->input->post('id_pengiriman', TRUE));
-                $tgl = $this->security->xss_clean($this->input->post('date', TRUE));
+                $tgl = date('Y-m-d', strtotime(str_replace('/', '-', $this->security->xss_clean($this->input->post('date', TRUE)))));
                 $nama = $this->security->xss_clean($this->input->post('customer', TRUE));
                 $telp = $this->security->xss_clean($this->input->post('phone', TRUE));
                 $alamat = $this->security->xss_clean($this->input->post('alamat', TRUE));
@@ -287,7 +297,7 @@ class Data_pengiriman extends CI_Controller
                     'status' => $status,
                 ];
 
-                $up = $this->m_pengiriman-->update('tbl_pengiriman', $data_update, ['id_pengiriman' => $idPengiriman]);
+                $up = $this->m_pengiriman->update('tbl_pengiriman', $data_update, ['id_pengiriman' => $idPengiriman]);
 
                 if ($up) {
                     $this->session->set_flashdata('success', 'Data Pengiriman berhasil diperbarui..');
@@ -301,7 +311,7 @@ class Data_pengiriman extends CI_Controller
         $where = [
             'id_pengiriman' => $this->security->xss_clean($id)
         ];
-        $getData = $this->m_pengiriman-->getData('tbl_pengiriman', $where);
+        $getData = $this->m_pengiriman->getData('tbl_pengiriman', $where);
         //cek jumlah data
         if ($getData->num_rows() != 1) {
             redirect('pengiriman');
@@ -333,10 +343,10 @@ class Data_pengiriman extends CI_Controller
             );
 
             if ($this->form_validation->run() == TRUE) {
-                //tangkap rowid
+                //tangkap row id
                 $id = $this->security->xss_clean($this->input->post('id_pengiriman', TRUE));
 
-                $hapus = $this->m_pengiriman-->delete('tbl_pengiriman', ['id_pengiriman' => $id]);
+                $hapus = $this->m_pengiriman->delete('tbl_pengiriman', ['id_pengiriman' => $id]);
 
                 if ($hapus) {
                     echo json_encode(['message' => 'success']);
@@ -357,7 +367,7 @@ class Data_pengiriman extends CI_Controller
         //cek apakah request berupa ajax atau bukan, jika bukan maka redirect ke home
         if ($this->input->is_ajax_request()) {
             //ambil list data
-            $list = $this->m_pengiriman-->get_datatables();
+            $list = $this->m_pengiriman->get_datatables();
             //siapkan variabel array
             $data = array();
             $no = $_POST['start'];
@@ -370,21 +380,24 @@ class Data_pengiriman extends CI_Controller
                 $row[] = $i->id_pengiriman;
                 $row[] = $i->date;
                 $row[] = $i->customer;
-                $row[] = ($i->telp != '') ? $i->telp : '-';
+                $row[] = ($i->phone != '') ? $i->phone : '-';
                 $row[] = $i->alamat;
                 $row[] = $i->kurir;
                 $row[] = $i->no_kendaraan;
                 $row[] = $i->penerima;
                 $row[] = $i->keterangan;
                 $row[] = $i->status;
-                $row[] = '<a href="' . site_url('pengiriman/' . $i->id_pengiriman) . '" class="btn btn-warning btn-sm text-white">Edit</a> <br> <button type="button" class="btn btn-danger btn-sm"onclick="hapus_pengiriman(\'' . $i->id_pengiriman . '\')">Hapus</button>';
+                $row[] = '<div>
+                            <a href="' . site_url('edit_pengiriman/' . $i->id_pengiriman) . '" class="btn btn-warning btn-sm text-white">Edit</a>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="hapus_pengiriman(\'' . $i->id_pengiriman . '\')">Hapus</button>
+                        </div>';
                 $data[] = $row;
             }
 
             $output = array(
                 "draw" => $_POST['draw'],
-                "recordsTotal" => $this->m_pengiriman-->count_all(),
-                "recordsFiltered" => $this->m_pengiriman-->count_filtered(),
+                "recordsTotal" => $this->m_pengiriman->count_all(),
+                "recordsFiltered" => $this->m_pengiriman->count_filtered(),
                 "data" => $data
             );
             //output to json format

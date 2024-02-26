@@ -20,9 +20,9 @@
                     <a href="<?= site_url('pegawai'); ?>"><i class="fa fa-users"></i> Data Pegawai</a>
                 </li>
 
-                <li <?= (in_array(strtolower($this->uri->segment(1)), ['supplier', 'tambah_supplier', 'edit_supplier'])) ? 'class="active"' : ''; ?>>
-                    <a href="<?= site_url('supplier'); ?>">
-                        <i class="fa fa-truck"></i> Data Supplier
+                <li <?= (in_array(strtolower($this->uri->segment(1)), ['pengiriman', 'tambah_pengiriman', 'edit_pengiriman'])) ? 'class="active"' : ''; ?>>
+                    <a href="<?= site_url('pengiriman'); ?>">
+                        <i class="fa fa-truck"></i> Pengiriman
                     </a>
                 </li>
             <?php

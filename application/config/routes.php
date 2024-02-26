@@ -77,7 +77,7 @@ $route['ajax_pegawai'] = 'data_pegawai/ajax_pegawai';
 
 //route data pengiriman
 $route['pengiriman'] = 'data_pengiriman/index';
-$route['pengiriman/(:any)'] = 'data_pengiriman/edit_pengiriman/$1';
+$route['edit_pengiriman/(:any)'] = 'data_pengiriman/edit_pengiriman/$1';
 $route['ajax_pengiriman'] = 'data_pengiriman/ajax_pengiriman';
 $route['tambah_pengiriman'] = 'data_pengiriman/tambah_pengiriman';
 $route['hapus_pengiriman'] = 'data_pengiriman/hapus_data';

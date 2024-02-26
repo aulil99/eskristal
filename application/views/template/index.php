@@ -231,7 +231,7 @@
                 allowClear: true
             });
 
-            $('.supplier').select2();
+            $('.pengiriman').select2();
         });
 
         function imgPreview() {
@@ -771,7 +771,7 @@
                     url: "<?= site_url('hapus_pengiriman'); ?>",
                     method: "POST",
                     data: {
-                        id: id,
+                        id_pengiriman: id,
                         csrf_token: csrf_token
                     },
                     success: function(obj) {
