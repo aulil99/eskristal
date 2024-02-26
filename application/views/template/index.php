@@ -157,7 +157,7 @@
     <script src="<?= base_url('assets/js/js-cookie.js'); ?>"></script>
     <!-- Custom Javascript -->
     <?php
-    $arr_uri = array('stok_barang', 'barang', 'pegawai', 'supplier', 'data_pembelian', 'data_penjualan');
+    $arr_uri = array('stok_barang', 'barang', 'pegawai', 'pengiriman', 'data_pembelian', 'data_penjualan');
 
     if (in_array(strtolower($this->uri->segment(1)), $arr_uri) && !$this->uri->segment(2)) :
         switch ($this->uri->segment(1)) {
@@ -170,8 +170,8 @@
             case 'pegawai':
                 $file = 'ajax_pegawai';
                 break;
-            case 'supplier':
-                $file = 'ajax_supplier';
+            case 'pengiriman':
+                $file = 'ajax_pengiriman';
                 break;
             case 'data_pembelian':
                 $file = 'ajax_pembelian';
@@ -755,7 +755,7 @@
             });
         }
 
-        function hapus_supplier(id) {
+        function hapus_pengiriman(id) {
             swal({
                 title: 'Apakah anda yakin akan menghapus data ini ?',
                 type: 'warning',
@@ -768,7 +768,7 @@
                 var tabel = $('#tables').DataTable();
 
                 $.ajax({
-                    url: "<?= site_url('hapus_supplier'); ?>",
+                    url: "<?= site_url('hapus_pengiriman'); ?>",
                     method: "POST",
                     data: {
                         id: id,
@@ -781,7 +781,7 @@
                         if (a.message == 'success') {
                             swal({
                                 title: "Success!",
-                                text: "Data supplier berhasil dihapus",
+                                text: "Data pengiriman berhasil dihapus",
                                 type: "success",
                                 showCancelButton: false,
                                 showConfirmButton: false,
@@ -797,7 +797,7 @@
                         } else {
                             swal({
                                 title: "Error!",
-                                text: "Data supplier gagal dihapus",
+                                text: "Data pengiriman gagal dihapus",
                                 type: "error",
                                 showCancelButton: false,
                                 showConfirmButton: false,

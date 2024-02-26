@@ -75,12 +75,12 @@ $route['edit_pegawai/(:any)'] = 'data_pegawai/edit_data/$1';
 $route['ganti_password'] = 'data_pegawai/ganti_password';
 $route['ajax_pegawai'] = 'data_pegawai/ajax_pegawai';
 
-//route data supplier
-$route['supplier'] = 'data_supplier/index';
-$route['supplier/(:any)'] = 'data_supplier/edit_supplier/$1';
-$route['ajax_supplier'] = 'data_supplier/ajax_supplier';
-$route['tambah_supplier'] = 'data_supplier/tambah_supplier';
-$route['hapus_supplier'] = 'data_supplier/hapus_data';
+//route data pengiriman
+$route['pengiriman'] = 'data_pengiriman/index';
+$route['pengiriman/(:any)'] = 'data_pengiriman/edit_pengiriman/$1';
+$route['ajax_pengiriman'] = 'data_pengiriman/ajax_pengiriman';
+$route['tambah_pengiriman'] = 'data_pengiriman/tambah_pengiriman';
+$route['hapus_pengiriman'] = 'data_pengiriman/hapus_data';
 
 //route data pembelian barang
 $route['data_pembelian'] = 'pembelian/index';
