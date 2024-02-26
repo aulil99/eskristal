@@ -49,7 +49,7 @@ function tanggal_indo()
 <div class="alert alert-info" role="alert">
     <p class="mb-0 text-right"><b><i class="fa fa-calendar"></i> <?= hari_ini(); ?>, <?= tanggal_indo(); ?></b></p>
     <hr>
-    <h4 class="alert-heading"><i class="fa fa-info-circle"></i> Selamat Datang di <b>Aplikasi Stok Barang</b> | Repost by <a href='https://stokcoding.com/' title='StokCoding.com' target='_blank'>StokCoding.com</a>
-	</h4>
+    <h4 class="alert-heading"><i class="fa fa-info-circle"></i> Selamat Datang di <b>Aplikasi Es Kristal</b>
+    </h4>
     <p class="mb-5" style="font-size: 16px;">Saat ini anda login sebagai <b><?= $this->session->userdata('User'); ?></b> dengan level <b><?= ucfirst($this->session->userdata('level')); ?></b></p>
 </div>

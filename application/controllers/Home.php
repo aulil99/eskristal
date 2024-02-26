@@ -92,7 +92,7 @@ class Home extends CI_Controller
         $this->is_login();
 
         $data = [
-            'title' => 'Aplikasi Stok Barang'
+            'title' => 'Aplikasi Es Kristal'
         ];
 
         $this->template->kasir('home', $data);

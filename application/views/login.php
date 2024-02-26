@@ -53,8 +53,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12 text-center mt-5 mb-3">
                 <img src="<?= base_url('assets/img/login.png'); ?>" class="login" />
-                <h3 class="text-white mt-2">Aplikasi Stok Barang</h3>
-<br><center><p>Repost by <a href='https://stokcoding.com/' title='StokCoding.com' target='_blank'>StokCoding.com</a></p></center>
+                <h3 class="text-white mt-2">Aplikasi Es Kristal</h3>
 
                 <?php
                 if ($this->session->flashdata('alert')) {
