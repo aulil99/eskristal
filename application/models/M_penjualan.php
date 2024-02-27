@@ -21,7 +21,10 @@ class M_penjualan extends CI_Model
 
     function getAllData($table = null)
     {
-        return $this->db->get($table);
+        $this->db->from($table);
+        $this->db->order_by("tgl_penjualan", "desc");
+        $query = $this->db->get();
+        return $query;
     }
 
     function getData($table = null, $where = null)

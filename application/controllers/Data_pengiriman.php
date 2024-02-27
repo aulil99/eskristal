@@ -11,6 +11,8 @@ class Data_pengiriman extends CI_Controller
         //load Model
         $this->load->model('m_pengiriman');
 
+        $this->load->model('m_penjualan');
+
         header('Last-Modified:' . gmdate('D, d M Y H:i:s') . 'GMT');
         header('Cache-Control: no-cache, must-revalidate, max-age=0');
         header('Cache-Control: post-check=0, pre-check=0', false);
@@ -72,6 +74,18 @@ class Data_pengiriman extends CI_Controller
             }
 
             $this->form_validation->set_rules(
+                'id_penjualan',
+                'id penjualan',
+                "required|min_length[10]|max_length[255]|regex_match[/^[A-Z a-z.0-9-,']+$/]",
+                array(
+                    'required' => '{field} wajib diisi',
+                    'min_length' => '{field} minimal 5 karakter',
+                    'max_length' => '{field} maksimal 30 karakter',
+                    'regex_match' => 'Data {field} yang anda masukkan tidak valid'
+                )
+            );
+
+            $this->form_validation->set_rules(
                 'alamat',
                 'Alamat',
                 "required|min_length[10]|max_length[255]|regex_match[/^[A-Z a-z.0-9-,']+$/]",
@@ -111,6 +125,7 @@ class Data_pengiriman extends CI_Controller
             if ($this->form_validation->run() == TRUE) {
                 //tampung data ke variabel
                 $id = 'ID' . time();
+                $idPenjualan = $this->security->xss_clean($this->input->post('id_penjualan', TRUE));
                 $tgl = date('Y-m-d', strtotime(str_replace('/', '-', $this->security->xss_clean($this->input->post('date', TRUE)))));
                 $nama = $this->security->xss_clean($this->input->post('customer', TRUE));
                 $telp = $this->security->xss_clean($this->input->post('phone', TRUE));
@@ -120,6 +135,7 @@ class Data_pengiriman extends CI_Controller
 
                 $data_simpan = [
                     'id_pengiriman' => $id,
+                    'id_penjualan' => $idPenjualan,
                     'date' => $tgl,
                     'customer' => $nama,
                     'phone' => $telp,
@@ -139,7 +155,8 @@ class Data_pengiriman extends CI_Controller
         }
 
         $data = [
-            'title' => 'Tambah Pengiriman'
+            'title' => 'Tambah Pengiriman',
+            'data' => $this->m_penjualan->getAllData('tbl_penjualan'),
         ];
 
         $this->template->kasir('pengiriman/form_input', $data);
@@ -197,6 +214,18 @@ class Data_pengiriman extends CI_Controller
                     )
                 );
             }
+
+            $this->form_validation->set_rules(
+                'id_penjualan',
+                'id penjualan',
+                "required|min_length[10]|max_length[255]|regex_match[/^[A-Z a-z.0-9-,']+$/]",
+                array(
+                    'required' => '{field} wajib diisi',
+                    'min_length' => '{field} minimal 5 karakter',
+                    'max_length' => '{field} maksimal 30 karakter',
+                    'regex_match' => 'Data {field} yang anda masukkan tidak valid'
+                )
+            );
 
             $this->form_validation->set_rules(
                 'alamat',
@@ -274,6 +303,7 @@ class Data_pengiriman extends CI_Controller
             if ($this->form_validation->run() == TRUE) {
                 //tampung data ke variabel
                 $idPengiriman = $this->security->xss_clean($this->input->post('id_pengiriman', TRUE));
+                $idPenjualan = $this->security->xss_clean($this->input->post('id_penjualan', TRUE));
                 $tgl = date('Y-m-d', strtotime(str_replace('/', '-', $this->security->xss_clean($this->input->post('date', TRUE)))));
                 $nama = $this->security->xss_clean($this->input->post('customer', TRUE));
                 $telp = $this->security->xss_clean($this->input->post('phone', TRUE));
@@ -286,6 +316,7 @@ class Data_pengiriman extends CI_Controller
 
                 $data_update = [
                     'id_pengiriman' => $id,
+                    'id_penjualan' => $idPenjualan,
                     'date' => $tgl,
                     'customer' => $nama,
                     'phone' => $telp,
@@ -311,7 +342,12 @@ class Data_pengiriman extends CI_Controller
         $where = [
             'id_pengiriman' => $this->security->xss_clean($id)
         ];
+        
         $getData = $this->m_pengiriman->getData('tbl_pengiriman', $where);
+        $rowData = $getData->row();
+        $idP = $rowData->id_penjualan;
+
+        $getPenjualan = $this->m_penjualan->getData('tbl_penjualan', ['id_penjualan' => $this->security->xss_clean($idP)]);
         //cek jumlah data
         if ($getData->num_rows() != 1) {
             redirect('pengiriman');
@@ -319,7 +355,9 @@ class Data_pengiriman extends CI_Controller
 
         $data = [
             'title' => 'Edit Pengiriman',
-            'data' => $getData->row()
+            'data' => $rowData,
+            'pembeli' => $getPenjualan->row(),
+            'penjualan' => $this->m_penjualan->getAllData('tbl_penjualan')
         ];
 
         $this->template->kasir('pengiriman/form_edit', $data);
