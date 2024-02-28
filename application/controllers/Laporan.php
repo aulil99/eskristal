@@ -33,6 +33,17 @@ class Laporan extends CI_Controller
         $this->template->kasir('laporan/pengiriman_harian', $data);
     }
 
+    public function cetak_pengiriman_harian()
+    {
+        $this->is_login();
+
+        $data = [
+            'title' => 'Cetak Harian Pengiriman Barang',
+        ];
+
+        $this->template->cetak('cetak/pengiriman_harian', $data);
+    }
+
     public function data_stok_harian()
     {
         //cek login

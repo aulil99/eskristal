@@ -21,12 +21,15 @@ function tanggal_indo($tgl)
             <th scope="col">#</th>
             <th scope="col">ID Pengiriman</th>
             <th scope="col">Tanggal</th>
-            <th scope="col">Nama Pelanggan</th>
+            <th scope="col">Pelanggan</th>
             <th scope="col">No HP</th>
-            <th scope="col" class="text-center">Alamat</th>
-            <th scope="col" class="text-center">Kurir</th>
-            <th scope="col" class="text-center">No Kendaraan</th>
-            <th scope="col" class="text-center">Keterangan</th>
+            <th scope="col">Alamat</th>
+            <th scope="col">Kurir</th>
+            <th scope="col">No Kendaraan</th>
+            <th scope="col">Penerima</th>
+            <th scope="col">Keterangan</th>
+            <th scope="col">Status</th>
+            <th scope="col">Aksi</th>
         </tr>
     </thead>
     <tbody>
