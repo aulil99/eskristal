@@ -10,6 +10,8 @@ class Laporan extends CI_Controller
         $this->load->library(['template', 'form_validation']);
         //load model
         $this->load->model('m_laporan');
+        $this->load->model('m_penjualan');
+        $this->load->model('m_pengiriman');
 
         header('Last-Modified:' . gmdate('D, d M Y H:i:s') . 'GMT');
         header('Cache-Control: no-cache, must-revalidate, max-age=0');
@@ -77,6 +79,33 @@ class Laporan extends CI_Controller
         ];
 
         $this->template->cetak('cetak/pengiriman_harian', $data);
+    }
+
+    public function cetak_resi($id)
+    {
+        $this->is_login();
+
+        $where = [
+            'id_pengiriman' => $this->security->xss_clean($id)
+        ];
+        $getDelivery = $this->m_pengiriman->getData('tbl_pengiriman', $where);
+        $rowData = $getDelivery->row();
+        $idP = $rowData->id_penjualan;
+
+        //ambil data
+        $getData = $this->m_penjualan->getDataPenjualan($this->security->xss_clean($idP));
+
+        if ($getData->num_rows() < 1) {
+            redirect('dashboard');
+        }
+
+        $data = [
+            'title' => 'Detail Penjualan ' . $idP,
+            'data' => $getData,
+            'pengirim' => $getDelivery
+        ];
+
+        $this->template->cetak('cetak/resi_pengiriman', $data);
     }
 
     public function data_stok_harian()

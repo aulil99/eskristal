@@ -342,7 +342,6 @@ class Data_pengiriman extends CI_Controller
         $where = [
             'id_pengiriman' => $this->security->xss_clean($id)
         ];
-        
         $getData = $this->m_pengiriman->getData('tbl_pengiriman', $where);
         $rowData = $getData->row();
         $idP = $rowData->id_penjualan;
@@ -426,8 +425,11 @@ class Data_pengiriman extends CI_Controller
                 $row[] = $i->keterangan;
                 $row[] = $i->status;
                 $row[] = '<div>
-                            <a href="' . site_url('edit_pengiriman/' . $i->id_pengiriman) . '" class="btn btn-warning btn-sm text-white">Edit</a>
-                            <button type="button" class="btn btn-danger btn-sm" onclick="hapus_pengiriman(\'' . $i->id_pengiriman . '\')">Hapus</button>
+                            <a href="' . site_url('edit_pengiriman/' . $i->id_pengiriman) . '" class="btn btn-warning btn-sm text-white"><i class="fa fa-pencil"></i></a>
+                            <button type="button" class="btn btn-danger btn-sm" onclick="hapus_pengiriman(\'' . $i->id_pengiriman . '\')"><i class="fa fa-trash"></i></button>
+                            <a href="' . site_url('cetak_pengiriman/' . $i->id_pengiriman) . '" class="btn btn-success btn-sm" target="_blank">
+                                <i class="fa fa-print"></i>
+                            </a>
                         </div>';
                 $data[] = $row;
             }

@@ -126,6 +126,7 @@ $route['penjualan_harian/(:any)'] = 'laporan/cetak_penjualan_harian/$1';
 $route['penjualan_bulanan'] = 'laporan/data_penjualan_bulanan';
 $route['penjualan_bulanan/(:any)'] = 'laporan/cetak_penjualan_bulanan/$1';
 $route['laporan_pengiriman'] = 'laporan/laporan_pengiriman';
+$route['cetak_pengiriman/(:any)'] = 'laporan/cetak_resi/$1';
 $route['pengiriman_harian/(:any)'] = 'laporan/cetak_pengiriman_harian/$1';
 
 
