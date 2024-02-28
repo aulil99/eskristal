@@ -46,7 +46,6 @@ if ($this->session->flashdata('alert')) {
             <th scope="col">Penerima</th>
             <th scope="col">Keterangan</th>
             <th scope="col">Status</th>
-            <th scope="col">Aksi</th>
         </tr>
     </thead>
     <tbody>
@@ -67,6 +66,8 @@ if ($this->session->flashdata('alert')) {
                 echo '<td>' . $dt->alamat . '</td>';
                 echo '<td>' . $dt->kurir . '</td>';
                 echo '<td>' . $dt->no_kendaraan . '</td>';
+                echo '<td>' . $dt->penerima . '</td>';
+                echo '<td>' . $dt->keterangan . '</td>';
                 echo '<td>' . $dt->status . '</td>';
                 echo '</tr>';
             }

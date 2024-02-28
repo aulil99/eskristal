@@ -18,8 +18,8 @@ function tanggal_indo($tgl)
 <table class="table table-sm table-bordered mt-3">
     <thead>
         <tr>
-            <th scope="col">#</th>
             <th scope="col">ID Pengiriman</th>
+            <th scope="col">ID Pesanan</th>
             <th scope="col">Tanggal</th>
             <th scope="col">Pelanggan</th>
             <th scope="col">No HP</th>
@@ -29,10 +29,34 @@ function tanggal_indo($tgl)
             <th scope="col">Penerima</th>
             <th scope="col">Keterangan</th>
             <th scope="col">Status</th>
-            <th scope="col">Aksi</th>
         </tr>
     </thead>
     <tbody>
+    <?php
+        $row = 1;
+        if ($data->num_rows() > 0) {
+            $total = 0;
 
+            foreach ($data->result() as $dt) {
+                echo '<tr>';
+                echo '<td rowspan="' . $dt->row . '">' . $dt->id_pengiriman . '</td>';
+                echo '<td rowspan="' . $dt->row . '">' . $dt->id_penjualan . '</td>';
+                echo '<td>' . $dt->date . '</td>';
+                echo '<td>' . $dt->customer . '</td>';
+                echo '<td>' . $dt->phone . '</td>';
+                echo '<td>' . $dt->alamat . '</td>';
+                echo '<td>' . $dt->kurir . '</td>';
+                echo '<td>' . $dt->no_kendaraan . '</td>';
+                echo '<td>' . $dt->penerima . '</td>';
+                echo '<td>' . $dt->keterangan . '</td>';
+                echo '<td>' . $dt->status . '</td>';
+                echo '</tr>';
+            }
+        } else {
+            echo '<tr>';
+            echo '<td colspan="8" class="text-center">Data tidak ditemukan</td>';
+            echo '</tr>';
+        }
+        ?>
     </tbody>
 </table>

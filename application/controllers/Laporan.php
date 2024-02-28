@@ -60,12 +60,20 @@ class Laporan extends CI_Controller
         $this->template->kasir('laporan/pengiriman_harian', $data);
     }
 
-    public function cetak_pengiriman_harian()
+    public function cetak_pengiriman_harian($date)
     {
         $this->is_login();
 
+        if ($this->cekTanggal($date) == false) {
+            redirect('stok_harian');
+        }
+
+        $getData = $this->m_laporan->getDataPengiriman($date);
+
         $data = [
-            'title' => 'Cetak Harian Pengiriman Barang',
+            'title' => 'Laporan Harian Stok Barang',
+            'tanggal' => $date,
+            'data' => $getData
         ];
 
         $this->template->cetak('cetak/pengiriman_harian', $data);
