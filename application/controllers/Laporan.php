@@ -22,6 +22,17 @@ class Laporan extends CI_Controller
         redirect('dashboard');
     }
 
+    public function laporan_pengiriman()
+    {
+        $this->is_login();
+
+        $data = [
+            'title' => 'Laporan Harian Pengiriman Barang',
+        ];
+
+        $this->template->kasir('laporan/pengiriman_harian', $data);
+    }
+
     public function data_stok_harian()
     {
         //cek login

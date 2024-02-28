@@ -20,9 +20,19 @@
                     <a href="<?= site_url('pegawai'); ?>"><i class="fa fa-users"></i> Data Pegawai</a>
                 </li>
 
+                <li <?= (in_array(strtolower($this->uri->segment(1)), ['data_penjualan', 'tambah_penjualan', 'edit_penjualan'])) ? 'class="active"' : ''; ?>>
+                    <a href="<?= site_url('data_penjualan'); ?>"><i class="fa fa-reply"></i> Data Penjualan</a>
+                </li>
+
                 <li <?= (in_array(strtolower($this->uri->segment(1)), ['pengiriman', 'tambah_pengiriman', 'edit_pengiriman'])) ? 'class="active"' : ''; ?>>
                     <a href="<?= site_url('pengiriman'); ?>">
                         <i class="fa fa-truck"></i> Pengiriman
+                    </a>
+                </li>
+
+                <li <?= (in_array(strtolower($this->uri->segment(1)), ['laporan_pengiriman'])) ? 'class="active"' : ''; ?>>
+                    <a href="<?= site_url('laporan_pengiriman'); ?>">
+                        <i class="fa fa-file-text-o"></i>Laporan Pengiriman
                     </a>
                 </li>
             <?php
@@ -40,13 +50,9 @@
             endif;
             ?>
 
-            <li <?= (in_array(strtolower($this->uri->segment(1)), ['data_pembelian', 'tambah_pembelian', 'edit_pembelian'])) ? 'class="active"' : ''; ?>>
+            <!-- <li <?= (in_array(strtolower($this->uri->segment(1)), ['data_pembelian', 'tambah_pembelian', 'edit_pembelian'])) ? 'class="active"' : ''; ?>>
                 <a href="<?= site_url('data_pembelian'); ?>"><i class="fa fa-share"></i> Data Pembelian</a>
-            </li>
-
-            <li <?= (in_array(strtolower($this->uri->segment(1)), ['data_penjualan', 'tambah_penjualan', 'edit_penjualan'])) ? 'class="active"' : ''; ?>>
-                <a href="<?= site_url('data_penjualan'); ?>"><i class="fa fa-reply"></i> Data Penjualan</a>
-            </li>
+            </li> -->
 
             <li <?= (in_array(strtolower($this->uri->segment(1)), ['stok_harian', 'stok_bulanan', 'stok_tahunan'])) ? 'class="active"' : ''; ?>>
                 <a href="#pageStokBarang" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
@@ -72,7 +78,7 @@
                 </ul>
             </li>
 
-            <li <?= (in_array(strtolower($this->uri->segment(1)), ['pembelian_harian', 'pembelian_bulanan', 'pembelian_tahunan'])) ? 'class="active"' : ''; ?>>
+            <!-- <li <?= (in_array(strtolower($this->uri->segment(1)), ['pembelian_harian', 'pembelian_bulanan', 'pembelian_tahunan'])) ? 'class="active"' : ''; ?>>
                 <a href="#pagePembelian" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <i class="fa fa-file-text-o"></i> Laporan Pembelian Barang
                 </a>
@@ -89,7 +95,7 @@
                         </a>
                     </li>
                 </ul>
-            </li>
+            </li> -->
 
             <li <?= (in_array(strtolower($this->uri->segment(1)), ['penjualan_harian', 'penjualan_bulanan'])) ? 'class="active"' : ''; ?>>
                 <a href="#pagePenjualan" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-file-text-o"></i> Laporan Penjualan Barang</a>

@@ -125,6 +125,7 @@ $route['penjualan_harian'] = 'laporan/data_penjualan_harian';
 $route['penjualan_harian/(:any)'] = 'laporan/cetak_penjualan_harian/$1';
 $route['penjualan_bulanan'] = 'laporan/data_penjualan_bulanan';
 $route['penjualan_bulanan/(:any)'] = 'laporan/cetak_penjualan_bulanan/$1';
+$route['laporan_pengiriman'] = 'laporan/laporan_pengiriman';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
