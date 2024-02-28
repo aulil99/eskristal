@@ -24,7 +24,7 @@ function tanggal_indo($tgl)
             <th scope="col">Brand</th>
             <th scope="col" class="text-center">Stok Barang</th>
             <th scope="col" class="text-center">Qty Penjualan</th>
-            <th scope="col" class="text-center">Qty Pembelian</th>
+            <!-- <th scope="col" class="text-center">Qty Pembelian</th> -->
         </tr>
     </thead>
     <tbody>
@@ -33,7 +33,7 @@ function tanggal_indo($tgl)
         if ($data->num_rows() > 0) {
             foreach ($data->result() as $dt) {
                 $penjualan = ($dt->qty_penjualan_new != '') ? $dt->qty_penjualan_new : 0;
-                $pembelian = ($dt->qty_pembelian_new != '') ? $dt->qty_pembelian_new : 0;
+                // $pembelian = ($dt->qty_pembelian_new != '') ? $dt->qty_pembelian_new : 0;
 
                 echo '<tr>';
                 echo '<td>' . $i++ . '</td>';
@@ -42,7 +42,7 @@ function tanggal_indo($tgl)
                 echo '<td>' . $dt->brand . '</td>';
                 echo '<td class="text-center">' . (($dt->stok + $penjualan) - $pembelian) . '</td>';
                 echo '<td class="text-center">' . (($dt->qty_penjualan != '') ? $dt->qty_penjualan : 0) . '</td>';
-                echo '<td class="text-center">' . (($dt->qty_pembelian != '') ? $dt->qty_pembelian : 0) . '</td>';
+                // echo '<td class="text-center">' . (($dt->qty_pembelian != '') ? $dt->qty_pembelian : 0) . '</td>';
                 echo '</tr>';
             }
         } else {
