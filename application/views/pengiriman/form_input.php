@@ -70,10 +70,10 @@
     </div>
 
     <div class="form-group row">
-        <label for="id_penjualan" class="col-sm-3 col-form-label">Nama Pembeli</label>
+        <label for="id_penjualan" class="col-sm-3 col-form-label">Nama Pesanan</label>
         <div class="col-sm-9">
             <select class="barang-select custom-select custom-select-sm pilih-barang" name="id_penjualan" id="id_penjualan">
-                <option value="" disabled selected>Pilih Nama Pembeli</option>
+                <option value="" disabled selected>Pilih Nama Pesanan yang Dituju</option>
                 <?php foreach ($data->result() as $d) : ?>
                     <option value="<?= $d->id_penjualan; ?>">
                         <?= $d->nama_pembeli . ' ( ' . $d->tgl_penjualan . ' )'; ?>

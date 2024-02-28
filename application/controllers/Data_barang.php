@@ -72,6 +72,16 @@ class Data_barang extends CI_Controller
             );
 
             $this->form_validation->set_rules(
+                'stok',
+                'Stok barang',
+                "required|regex_match[/^[0-9.]+$/]",
+                array(
+                    'required' => '{field} wajib diisi',
+                    'regex_match' => '{field} hanya boleh angka'
+                )
+            );
+
+            $this->form_validation->set_rules(
                 'harga',
                 'Harga Jual',
                 "required|regex_match[/^[0-9.]+$/]",
@@ -88,6 +98,7 @@ class Data_barang extends CI_Controller
                     'kode_barang' => $this->security->xss_clean($this->input->post('kode', TRUE)),
                     'nama_barang' => $this->security->xss_clean($this->input->post('nama_barang', TRUE)),
                     'brand' => $this->security->xss_clean($this->input->post('brand', TRUE)),
+                    'stok' => $this->security->xss_clean($this->input->post('stok', TRUE)),
                     'harga' => str_replace('.', '', $this->security->xss_clean($this->input->post('harga', TRUE)))
                 );
 
@@ -177,6 +188,16 @@ class Data_barang extends CI_Controller
             );
 
             $this->form_validation->set_rules(
+                'stok',
+                'Stok barang',
+                "required|regex_match[/^[0-9.]+$/]",
+                array(
+                    'required' => '{field} wajib diisi',
+                    'regex_match' => '{field} hanya boleh angka'
+                )
+            );
+
+            $this->form_validation->set_rules(
                 'harga',
                 'Harga Jual',
                 "required|regex_match[/^[0-9.]+$/]",
@@ -204,6 +225,7 @@ class Data_barang extends CI_Controller
                 $update = array(
                     'nama_barang' => $this->security->xss_clean($this->input->post('nama_barang', TRUE)),
                     'brand' => $this->security->xss_clean($this->input->post('brand', TRUE)),
+                    'stok' => $this->security->xss_clean($this->input->post('stok', TRUE)),
                     'harga' => str_replace('.', '', $this->security->xss_clean($this->input->post('harga', TRUE))),
                     'active' => $this->security->xss_clean($this->input->post('status', TRUE))
                 );

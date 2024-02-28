@@ -40,6 +40,16 @@
     </div>
 
     <div class="form-group row">
+        <label for="harga" class="col-sm-3 col-form-label">Stok Tersedia</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control form-control-sm uang <?= (form_error('stok')) ? 'is-invalid' : ''; ?>" id="stok" name="stok" placeholder="Stok yang Tersedia" value="<?= set_value('stok'); ?>">
+            <div class="invalid-feedback">
+                <?= form_error('stok', '<p class="error-message">', '</p>'); ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
         <label for="harga" class="col-sm-3 col-form-label">Harga Jual</label>
         <div class="col-sm-6">
             <input type="text" class="form-control form-control-sm uang <?= (form_error('harga')) ? 'is-invalid' : ''; ?>" id="harga" name="harga" placeholder="Harga Jual" value="<?= set_value('harga'); ?>">
