@@ -8,6 +8,16 @@ class M_laporan extends CI_Model
         parent::__construct();
     }
 
+    function getDataPengiriman($tanggal)
+    {
+        $table = 'tbl_pengiriman';
+
+        $this->db->from($table);
+        $this->db->where("date", $tanggal);
+
+        return $this->db->get();
+    }
+
     function getDataStokHarian($tanggal)
     {
         $table = 'tbl_barang b

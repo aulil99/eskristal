@@ -508,7 +508,7 @@
             var csrf_token = Cookies.get('csrf_cookie');
             $('#barang-penjualan').addClass('pilih-barang');
 
-            if (qty > sisa) {
+            if (parseInt(qty) > parseInt(sisa)) {
                 swal({
                     title: "Error!",
                     text: "Jumlah beli melebihi stok",

@@ -26,8 +26,35 @@ class Laporan extends CI_Controller
     {
         $this->is_login();
 
+        if ($this->input->post('cari', TRUE) == 'Search') {
+            //validasi input data tanggal
+            $this->form_validation->set_rules(
+                'tanggal',
+                'Tanggal',
+                'required|callback_checkDateFormat',
+                array(
+                    'required' => '{field} wajib diisi',
+                    'checkDateFormat' => '{field} tidak valid'
+                )
+            );
+
+            if ($this->form_validation->run() == TRUE) {
+                $tanggal = $this->security->xss_clean($this->input->post('tanggal', TRUE));
+            } else {
+                $this->session->set_flashdata('alert', validation_errors('<p class="my-0">', '</p>'));
+
+                redirect('laporan_pengiriman');
+            }
+        } else {
+            $tanggal = date('d/m/Y');
+        }
+
+        $getData = $this->m_laporan->getDataPengiriman(date('Y-m-d', strtotime(str_replace('/', '-', $tanggal))));
+
         $data = [
             'title' => 'Laporan Harian Pengiriman Barang',
+            'tanggal' => $tanggal,
+            'data' => $getData
         ];
 
         $this->template->kasir('laporan/pengiriman_harian', $data);
