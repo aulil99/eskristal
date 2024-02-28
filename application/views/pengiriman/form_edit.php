@@ -74,7 +74,7 @@
         <label for="id_penjualan" class="col-sm-3 col-form-label">Nama Pembeli</label>
         <div class="col-sm-9">
             <select class="barang-select custom-select custom-select-sm pilih-barang" name="id_penjualan" id="id_penjualan">
-                <option value="<?= (set_value('id_penjualan')) ? set_value('id_penjualan') : $data->id_penjualan; ?>" disabled selected><?= $pembeli->nama_pembeli; ?></option>
+                <option value="<?= (set_value('id_penjualan')) ? set_value('id_penjualan') : $data->id_penjualan; ?>" selected><?= $pembeli->nama_pembeli . ' ( ' . $data->id_penjualan . ' )'; ?></option>
                 <?php foreach ($penjualan->result() as $d) : ?>
                     <option value="<?= $d->id_penjualan; ?>">
                         <?= $d->nama_pembeli . ' ( ' . $d->tgl_penjualan . ' )'; ?>
