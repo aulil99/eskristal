@@ -31,7 +31,7 @@ class Pelanggan extends CI_Controller
         $this->template->kasir('pelanggan/index', $data);
     }
 
-    public function index()
+    public function tambah_pelanggan()
     {
         //cek login
         // $this->is_login();
@@ -43,5 +43,19 @@ class Pelanggan extends CI_Controller
         ];
 
         $this->template->kasir('pelanggan/form_input', $data);
+    }
+
+    public function edit_pelanggan()
+    {
+        //cek login
+        // $this->is_login();
+        //kosongkan cart
+
+
+        $data = [
+            'title' => 'Tambah Pelanggan'
+        ];
+
+        $this->template->kasir('pelanggan/form_edit', $data);
     }
 }

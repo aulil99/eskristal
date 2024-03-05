@@ -132,6 +132,7 @@ $route['pengiriman_harian/(:any)'] = 'laporan/cetak_pengiriman_harian/$1';
 //route pelanggan
 $route['pelanggan'] = 'pelanggan/index';
 $route['tambah_pelanggan'] = 'pelanggan/tambah_pelanggan';
+$route['edit_pelanggan'] = 'pelanggan/edit_pelanggan';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;
