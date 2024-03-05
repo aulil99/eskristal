@@ -20,6 +20,10 @@
                     <a href="<?= site_url('pegawai'); ?>"><i class="fa fa-users"></i> Data Pegawai</a>
                 </li>
 
+                <li <?= (in_array(strtolower($this->uri->segment(1)), ['pelanggan', 'tambah_pelanggan', 'edit_pelanggan'])) ? 'class="active"' : ''; ?>>
+                    <a href="<?= site_url('pelanggan'); ?>"><i class="fa fa-users"></i> Data Pelanggan</a>
+                </li>
+
                 <li <?= (in_array(strtolower($this->uri->segment(1)), ['data_penjualan', 'tambah_penjualan', 'edit_penjualan'])) ? 'class="active"' : ''; ?>>
                     <a href="<?= site_url('data_penjualan'); ?>"><i class="fa fa-reply"></i> Data Penjualan</a>
                 </li>
