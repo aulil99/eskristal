@@ -1,12 +1,12 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class M_pengiriman extends CI_Model
+class M_pelanggan extends CI_Model
 {
-    var $table           = 'tbl_pengiriman';
-    var $column_order    =  array(null, 'id_pengiriman', 'id_penjualan', 'customer', 'ongkir', 'phone', 'alamat', 'kurir', "no_kendaraan", "no_po", "penerima", "keterangan", "status", null); //set column field database untuk datatable order
-    var $column_search   =  array('id_pengiriman', 'id_penjualan', 'customer', 'ongkir', 'phone', 'alamat', 'kurir', "no_kendaraan", "no_po", "penerima", "keterangan", "status"); //set column field database untuk datatable search
-    var $order = array('id_pengiriman' => 'asc'); // default order
+    var $table           = 'tbl_pelanggan';
+    var $column_order    =  array(null, 'id_pelanggan', 'nama', 'phone', 'alamat', 'fasilitas', "status", null); //set column field database untuk datatable order
+    var $column_search   =  array('id_pelanggan', 'nama', 'phone', 'alamat', 'fasilitas', "status"); //set column field database untuk datatable search
+    var $order = array('id_pelanggan' => 'asc'); // default order
 
     function __construct()
     {

@@ -4,7 +4,7 @@
     <div class="col-sm-12 col-md-10">
         <h4 class="mb-0"><i class="fa fa-truck"></i> Pengiriman</h4>
     </div>
-    <div class="col-sm-12 col-md-2">
+    <div class="col-md-2 mb-3">
         <a href="<?= site_url('tambah_pengiriman'); ?>" class="btn btn-success btn-sm btn-block">Tambah Data</a>
     </div>
 </div>
@@ -24,6 +24,34 @@ if ($this->session->flashdata('error')) {
   </div>';
 }
 ?>
+
+
+<div class="col-sm-12 col-md-10">
+    <h5 class="mb-3">Ongkos Pengiriman</h5>
+</div>
+<div class="col-5">
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th scope="col">Jenis Pelanggan</th>
+                <th scope="col">Harga Ongkir</th>
+                <th scope="col">Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($ongkir->result() as $o) : ?>
+                <tr>
+                    <td><?= $o->jenis; ?></td>
+                    <td><?= $o->harga; ?></td>
+                    <td><a href="<?= site_url('edit_ongkir/') . $o->id; ?>" class="btn btn-warning btn-sm text-white"><i class="fa fa-pencil"></i></a></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+<hr class="mt-0" />
+
 <div class="table-responsive">
     <table class="table table-sm table-hover table-striped" id="tables">
         <thead class="thead-dark">

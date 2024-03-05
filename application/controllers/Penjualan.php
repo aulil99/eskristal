@@ -10,6 +10,7 @@ class Penjualan extends CI_Controller
         $this->load->library(['template', 'form_validation', 'cart']);
         //load model
         $this->load->model('m_penjualan');
+        $this->load->model('m_pelanggan');
 
         header('Last-Modified:' . gmdate('D, d M Y H:i:s') . 'GMT');
         header('Cache-Control: no-cache, must-revalidate, max-age=0');
@@ -51,18 +52,6 @@ class Penjualan extends CI_Controller
                 array(
                     'required' => '{field} wajib diisi',
                     'checkDateFormat' => '{field} tidak valid'
-                )
-            );
-
-            $this->form_validation->set_rules(
-                'pembeli',
-                'Nama Pembeli',
-                "required|min_length[3]|max_length[30]|regex_match[/^[A-Z a-z.']+$/]",
-                array(
-                    'required' => '{field} wajib diisi',
-                    'min_length' => '{field} minimal 3 karakter',
-                    'max_length' => '{field} maksimal 30 karakter',
-                    'regex_match' => '{field} hanya boleh huruf, titik dan kutip satu (\')'
                 )
             );
 
@@ -112,6 +101,7 @@ class Penjualan extends CI_Controller
         $data = [
             'title' => 'Tambah Data penjualan Barang',
             'data' => $this->m_penjualan->getData('tbl_barang', ['active' => 'Y']),
+            'pelanggan' => $this->m_pelanggan->getAllData('tbl_pelanggan'),
             'table' => $this->read_cart()
         ];
 
@@ -307,6 +297,7 @@ class Penjualan extends CI_Controller
             'title' => 'Edit Data Penjualan',
             'fdata' => $fData,
             'data' => $this->m_penjualan->getData('tbl_barang', ['active' => 'Y']),
+            'pelanggan' => $this->m_pelanggan->getAllData('tbl_pelanggan'),
             'table' => $this->read_cart()
         ];
 

@@ -12,7 +12,7 @@
     <div class="form-group row">
         <label for="date" class="col-sm-3 col-form-label">Tanggal</label>
         <div class="col-sm-9">
-            <input type="date" class="form-control form-control-sm <?= (form_error('date')) ? 'is-invalid' : ''; ?>" name="date" value="<?= (set_value('date')); ?>">
+            <input autofocus type="date" class="form-control form-control-sm <?= (form_error('date')) ? 'is-invalid' : ''; ?>" name="date" value="<?= (set_value('date')); ?>">
             <div class="invalid-feedback">
                 <?= form_error('date', '<p class="error-message">', '</p>'); ?>
             </div>
@@ -20,12 +20,16 @@
     </div>
 
     <div class="form-group row">
-        <label for="pelanggan" class="col-sm-3 col-form-label">Pelanggan</label>
+        <label for="nama_pelanggan" class="col-sm-3 col-form-label">Nama Pelanggan</label>
         <div class="col-sm-9">
-            <input type="text" class="form-control form-control-sm <?= (form_error('customer')) ? 'is-invalid' : ''; ?>" id="customer" required autofocus name="customer" placeholder="Nama Pelanggan" value="<?= set_value('customer'); ?>">
-            <div class="invalid-feedback">
-                <?= form_error('customer', '<p class="error-message">', '</p>'); ?>
-            </div>
+            <select class="custom-select custom-select-sm" id="nama_pelanggan" name="customer" id="customer">
+                <option value="" disabled selected>Pilih Nama Pelanggan</option>
+                <?php foreach ($pelanggan->result() as $p) : ?>
+                    <option value="<?= $p->nama; ?>">
+                        <?= $p->nama; ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
         </div>
     </div>
 
@@ -42,7 +46,7 @@
     <div class="form-group row">
         <label for="alamat_pelanggan" class="col-sm-3 col-form-label">Alamat Pelanggan</label>
         <div class="col-sm-9">
-            <textarea type="text" class="form-control form-control-sm <?= (form_error('alamat')) ? 'is-invalid' : ''; ?>" id="alamat" required autofocus name="alamat" placeholder="Alamat Pelanggan" value="<?= set_value('alamat'); ?>" cols="10" rows="5"></textarea>
+            <textarea type="text" class="form-control form-control-sm <?= (form_error('alamat')) ? 'is-invalid' : ''; ?>" id="alamat" required name="alamat" placeholder="Alamat Pelanggan" value="<?= set_value('alamat'); ?>" cols="10" rows="5"></textarea>
             <div class="invalid-feedback">
                 <?= form_error('alamat', '<p class="error-message">', '</p>'); ?>
             </div>

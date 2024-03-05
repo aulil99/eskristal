@@ -80,12 +80,23 @@ function tanggal_indo($tgl)
             </tr>
         <?php endforeach; ?>
         <tr>
+            <td colspan="6" class="text-center"><b>Ongkos Kirim</b></td>
+            <td>
+                <b>
+                    <span class="float-left">Rp.</span>
+                    <span class="float-right pr-3">
+                        <?= number_format($p->ongkir, 0, ',', '.') . ',-'; ?>
+                    </span>
+                </b>
+            </td>
+        </tr>
+        <tr>
             <td colspan="6" class="text-center"><b>Total</b></td>
             <td>
                 <b>
                     <span class="float-left">Rp.</span>
                     <span class="float-right pr-3">
-                        <?= number_format($total_pengeluaran, 0, ',', '.') . ',-'; ?>
+                        <?= number_format($total_pengeluaran + $p->ongkir, 0, ',', '.') . ',-'; ?>
                     </span>
                 </b>
             </td>

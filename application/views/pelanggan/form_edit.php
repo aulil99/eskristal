@@ -12,20 +12,21 @@
     <?php endif; ?>
 </div>
 <?= form_open(); ?>
+<input type="hidden" name="id_pelanggan" value="<?= $data->id_pelanggan; ?>" />
 <div class="col-md-12">
     <div class="form-group row">
-        <label for="tanggal" class="col-sm-2 col-form-label">Nama</label>
+        <label for="nama" class="col-sm-2 col-form-label">Nama</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control form-control-sm <?= (form_error('nama')) ? 'is-invalid' : ''; ?>" placeholder="Nama Pelanggan" name="nama" id="date-picker" value="">
+            <input type="text" class="form-control form-control-sm <?= (form_error('nama')) ? 'is-invalid' : ''; ?>" placeholder="Nama Pelanggan" name="nama" id="nama" value="<?= (set_value('nama')) ? set_value('nama') : $data->nama; ?>">
             <div class="invalid-feedback">
                 <?= form_error('nama', '<p class="error-message">', '</p>'); ?>
             </div>
         </div>
     </div>
     <div class="form-group row">
-        <label for="pembeli" class="col-sm-2 col-form-label">No Telepon</label>
+        <label for="phone" class="col-sm-2 col-form-label">No Telepon</label>
         <div class="col-sm-6">
-            <input type="text" name="phone" id="phone" class="form-control form-control-sm <?= (form_error('phone')) ? 'is-invalid' : ''; ?>" placeholder="No Telepon" value="<?= (set_value('phone')) ? set_value('phone') : ''; ?>">
+            <input type="text" name="phone" id="phone" class="form-control form-control-sm <?= (form_error('phone')) ? 'is-invalid' : ''; ?>" placeholder="No Telepon" value="<?= (set_value('phone')) ? set_value('phone') : $data->phone; ?>">
             <div class="invalid-feedback">
                 <?= form_error('phone', '<p class="error-message">', '</p>'); ?>
             </div>
@@ -34,27 +35,31 @@
     <div class="form-group row">
         <label for="alamat" class="col-sm-2 col-form-label">Alamat Pelanggan</label>
         <div class="col-sm-6">
-            <textarea type="text" class="form-control form-control-sm <?= (form_error('alamat')) ? 'is-invalid' : ''; ?>" id="alamat" required autofocus name="alamat" placeholder="Alamat Pelanggan" value="" name="" id="" cols="10" rows="5"><?= (set_value('alamat')) ? set_value('alamat') : $data->alamat; ?></textarea>
+            <textarea type="text" class="form-control form-control-sm <?= (form_error('alamat')) ? 'is-invalid' : ''; ?>" id="alamat" required autofocus name="alamat" placeholder="Alamat Pelanggan" cols="10" rows="5"><?= (set_value('alamat')) ? set_value('alamat') : $data->alamat; ?></textarea>
             <div class="invalid-feedback">
                 <?= form_error('alamat', '<p class="error-message">', '</p>'); ?>
             </div>
         </div>
     </div>
     <div class="form-group row">
-        <label for="tanggal" class="col-sm-2 col-form-label">Fasilitas</label>
+        <label for="fasilitas" class="col-sm-2 col-form-label">Fasilitas</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control form-control-sm <?= (form_error('fasilitas')) ? 'is-invalid' : ''; ?>" placeholder="Fasilitas yang diberikan" name="fasilitas" id="date-picker" value="">
+            <input type="text" class="form-control form-control-sm <?= (form_error('fasilitas')) ? 'is-invalid' : ''; ?>" placeholder="Fasilitas yang diberikan" name="fasilitas" id="fasilitas" value="<?= (set_value('fasilitas')) ? set_value('fasilitas') : $data->fasilitas; ?>">
             <div class="invalid-feedback">
-                <?= form_error('nama', '<p class="error-message">', '</p>'); ?>
+                <?= form_error('fasilitas', '<p class="error-message">', '</p>'); ?>
             </div>
         </div>
     </div>
     <div class="form-group row">
-        <label for="tanggal" class="col-sm-2 col-form-label">Jenis</label>
+        <label for="jenis" class="col-sm-2 col-form-label">Jenis Pelanggan</label>
         <div class="col-sm-6">
-            <input type="text" class="form-control form-control-sm <?= (form_error('jenis')) ? 'is-invalid' : ''; ?>" placeholder="Pelanggan/Agen" name="jenis" id="date-picker" value="">
+            <select class="form-control form-control-sm <?= (form_error('jenis')) ? 'is-invalid' : ''; ?>" id="jenis" name="jenis" placeholder="jenis" id="jenis" style="text-transform: capitalize;">
+                <option selected value="<?= (set_value('jenis')) ? set_value('jenis') : $data->jenis; ?>"><?= $data->jenis; ?></option>
+                <option value="agen">Agen</option>
+                <option value="pelanggan">Pelanggan Biasa</option>
+            </select>
             <div class="invalid-feedback">
-                <?= form_error('nama', '<p class="error-message">', '</p>'); ?>
+                <?= form_error('jenis', '<p class="error-message">', '</p>'); ?>
             </div>
         </div>
     </div>
@@ -73,6 +78,9 @@
     </div>
 
     <div class="col-sm-4 offset-sm-7">
+        <button type="submit" name="submit" class="btn btn-primary btn-sm" value="submit">
+            <i class="fa fa-save"></i> Simpan Data Pelanggan
+        </button>
         <button type="button" onclick="window.history.back()" class="btn btn-light btn-sm">
             Kembali
         </button>

@@ -34,6 +34,7 @@ if ($this->session->flashdata('error')) {
                 <th scope="col">No HP</th>
                 <th scope="col">Alamat</th>
                 <th scope="col">Fasilitas</th>
+                <th scope="col">Jenis Pelanggan</th>
                 <th scope="col">Status</th>
                 <th scope="col">Opsi</th>
             </tr>

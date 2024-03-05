@@ -157,7 +157,7 @@
     <script src="<?= base_url('assets/js/js-cookie.js'); ?>"></script>
     <!-- Custom Javascript -->
     <?php
-    $arr_uri = array('stok_barang', 'barang', 'pegawai', 'pengiriman', 'data_pembelian', 'data_penjualan');
+    $arr_uri = array('stok_barang', 'barang', 'pegawai', 'pengiriman', 'data_pembelian', 'data_penjualan', 'pelanggan');
 
     if (in_array(strtolower($this->uri->segment(1)), $arr_uri) && !$this->uri->segment(2)) :
         switch ($this->uri->segment(1)) {
@@ -178,6 +178,9 @@
                 break;
             case 'data_penjualan':
                 $file = 'ajax_penjualan';
+                break;
+            case 'pelanggan':
+                $file = 'ajax_pelanggan';
                 break;
         }
     ?>
@@ -798,6 +801,63 @@
                             swal({
                                 title: "Error!",
                                 text: "Data pengiriman gagal dihapus",
+                                type: "error",
+                                showCancelButton: false,
+                                showConfirmButton: false,
+                                timer: 2000
+                            }, function() {
+                                swal.close();
+                            });
+                        }
+
+                    }
+                });
+            });
+        }
+
+        function hapus_pelanggan(id) {
+            swal({
+                title: 'Apakah anda yakin akan menghapus data ini ?',
+                type: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#DD6B55',
+                confirmButtonText: 'Ya, Hapus!',
+                closeOnConfirm: false
+            }, function() {
+                var csrf_token = Cookies.get('csrf_cookie');
+                var tabel = $('#tables').DataTable();
+
+                $.ajax({
+                    url: "<?= site_url('hapus_pelanggan'); ?>",
+                    method: "POST",
+                    data: {
+                        id_pelanggan: id,
+                        csrf_token: csrf_token
+                    },
+                    success: function(obj) {
+
+                        var a = $.parseJSON(obj);
+
+                        if (a.message == 'success') {
+                            swal({
+                                title: "Success!",
+                                text: "Data pelanggan berhasil dihapus",
+                                type: "success",
+                                showCancelButton: false,
+                                showConfirmButton: false,
+                                timer: 2000
+                            }, function() {
+                                swal.close();
+
+                                $('#tables').each(function() {
+                                    dt = $(this).DataTable();
+                                    dt.ajax.reload();
+                                });
+                            });
+                        } else {
+                            swal({
+                                title: "Error!",
+                                text: "Data pelanggan gagal dihapus",
                                 type: "error",
                                 showCancelButton: false,
                                 showConfirmButton: false,

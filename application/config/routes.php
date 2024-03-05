@@ -81,6 +81,7 @@ $route['edit_pengiriman/(:any)'] = 'data_pengiriman/edit_pengiriman/$1';
 $route['ajax_pengiriman'] = 'data_pengiriman/ajax_pengiriman';
 $route['tambah_pengiriman'] = 'data_pengiriman/tambah_pengiriman';
 $route['hapus_pengiriman'] = 'data_pengiriman/hapus_data';
+$route['edit_ongkir/(:any)'] = 'data_pengiriman/ubah_ongkir/$1';
 
 //route data pembelian barang
 $route['data_pembelian'] = 'pembelian/index';
@@ -131,8 +132,10 @@ $route['pengiriman_harian/(:any)'] = 'laporan/cetak_pengiriman_harian/$1';
 
 //route pelanggan
 $route['pelanggan'] = 'pelanggan/index';
+$route['ajax_pelanggan'] = 'pelanggan/ajax_pelanggan';
 $route['tambah_pelanggan'] = 'pelanggan/tambah_pelanggan';
-$route['edit_pelanggan'] = 'pelanggan/edit_pelanggan';
+$route['edit_pelanggan/(:any)'] = 'pelanggan/edit_pelanggan/$1';
+$route['hapus_pelanggan'] = 'pelanggan/hapus_data';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

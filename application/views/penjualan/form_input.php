@@ -22,15 +22,21 @@
             </div>
         </div>
     </div>
+
     <div class="form-group row">
-        <label for="pembeli" class="col-sm-2 col-form-label">Nama Pembeli</label>
+        <label for="nama_pelanggan" class="col-sm-2 col-form-label">Nama Pelanggan</label>
         <div class="col-sm-6">
-            <input type="text" name="pembeli" id="pembeli" class="form-control form-control-sm <?= (form_error('pembeli')) ? 'is-invalid' : ''; ?>" placeholder="Nama Pembeli" value="<?= (set_value('pembeli')) ? set_value('pembeli') : ''; ?>">
-            <div class="invalid-feedback">
-                <?= form_error('pembeli', '<p class="error-message">', '</p>'); ?>
-            </div>
+            <select class="custom-select custom-select-sm" id="nama_pelanggan" name="pembeli" id="pembeli">
+                <option value="" disabled selected>Pilih Nama Pelanggan</option>
+                <?php foreach ($pelanggan->result() as $p) : ?>
+                    <option value="<?= $p->nama; ?>">
+                        <?= $p->nama; ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
         </div>
     </div>
+
     <div class="form-group row">
         <label for="barang-penjualan" class="col-sm-2 col-form-label">Barang</label>
         <div class="col-sm-6">

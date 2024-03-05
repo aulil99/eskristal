@@ -13,6 +13,10 @@ class Data_pengiriman extends CI_Controller
 
         $this->load->model('m_penjualan');
 
+        $this->load->model('m_ongkir');
+
+        $this->load->model('m_pelanggan');
+
         header('Last-Modified:' . gmdate('D, d M Y H:i:s') . 'GMT');
         header('Cache-Control: no-cache, must-revalidate, max-age=0');
         header('Cache-Control: post-check=0, pre-check=0', false);
@@ -24,10 +28,78 @@ class Data_pengiriman extends CI_Controller
         $this->is_admin();
 
         $data = [
-            'title' => 'Data Pengiriman'
+            'title' => 'Data Pengiriman',
+            'ongkir' => $this->m_ongkir->getAllData('tbl_ongkir')
         ];
 
         $this->template->kasir('pengiriman/index', $data);
+    }
+
+    public function ubah_ongkir($id)
+    {
+        $this->is_admin();
+
+        if ($this->input->post('submit', TRUE) == 'submit') {
+            //validasi form
+
+            $this->form_validation->set_rules(
+                'jenis',
+                'Jenis Pelanggan',
+                'required|min_length[3]|max_length[255]',
+                array(
+                    'required' => '{field} wajib diisi',
+                    'min_length' => '{field} minimal 3 karakter',
+                    'max_length' => '{field} maksimal 255 karakter'
+                )
+            );
+
+            $this->form_validation->set_rules(
+                'harga',
+                'Harga Ongkir',
+                "required|regex_match[/^[0-9.]+$/]",
+                array(
+                    'required' => '{field} wajib diisi',
+                    'regex_match' => '{field} hanya boleh angka'
+                )
+            );
+
+            if ($this->form_validation->run() == TRUE) {
+                //tampung data ke variabel
+
+                $jenis = $this->security->xss_clean($this->input->post('jenis', TRUE));
+                $harga = str_replace('.', '', $this->security->xss_clean($this->input->post('harga', TRUE)));
+
+                $data_simpan = [
+                    'jenis' => $jenis,
+                    'harga' => $harga,
+                ];
+
+                $up = $this->m_ongkir->update('tbl_ongkir', $data_simpan, ['id' => $id]);
+
+                if ($up) {
+                    $this->session->set_flashdata('success', 'Data Ongkir berhasil diperbarui..');
+
+                    redirect('pengiriman');
+                }
+            }
+        }
+        //ambil data
+        $where = [
+            'id' => $this->security->xss_clean($id)
+        ];
+        $getData = $this->m_ongkir->getData('tbl_ongkir', $where);
+
+        //cek jumlah data
+        if ($getData->num_rows() != 1) {
+            redirect('pengiriman');
+        }
+
+        $data = [
+            'title' => 'Edit Ongkos Kirim',
+            'data' => $getData->row()
+        ];
+
+        $this->template->kasir('pengiriman/form_ongkir', $data);
     }
 
     public function tambah_pengiriman()
@@ -133,16 +205,23 @@ class Data_pengiriman extends CI_Controller
                 $kurir = $this->security->xss_clean($this->input->post('kurir', TRUE));
                 $plat = $this->security->xss_clean($this->input->post('no_kendaraan', TRUE));
 
-                $data_simpan = [
-                    'id_pengiriman' => $id,
-                    'id_penjualan' => $idPenjualan,
-                    'date' => $tgl,
-                    'customer' => $nama,
-                    'phone' => $telp,
-                    'alamat' => $alamat,
-                    'kurir' => $kurir,
-                    'no_kendaraan' => $plat
-                ];
+                $plg = $this->m_pelanggan->getData('tbl_pelanggan', ['nama' => $nama]);
+                $dataPlg = $plg->row();
+
+                $dataOngkir = $this->m_ongkir->getData('tbl_ongkir', ['jenis' => $dataPlg->jenis]);
+                $ongkir = $dataOngkir->row();
+
+                    $data_simpan = [
+                        'id_pengiriman' => $id,
+                        'id_penjualan' => $idPenjualan,
+                        'date' => $tgl,
+                        'customer' => $nama,
+                        'ongkir' => $ongkir->harga,
+                        'phone' => $telp,
+                        'alamat' => $alamat,
+                        'kurir' => $kurir,
+                        'no_kendaraan' => $plat
+                    ];
 
                 $simpan = $this->m_pengiriman->save('tbl_pengiriman', $data_simpan);
 
@@ -157,6 +236,7 @@ class Data_pengiriman extends CI_Controller
         $data = [
             'title' => 'Tambah Pengiriman',
             'data' => $this->m_penjualan->getAllData('tbl_penjualan'),
+            'pelanggan' => $this->m_pelanggan->getAllData('tbl_pelanggan')
         ];
 
         $this->template->kasir('pengiriman/form_input', $data);
