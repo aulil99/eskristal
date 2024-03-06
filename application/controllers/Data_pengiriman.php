@@ -178,7 +178,7 @@ class Data_pengiriman extends CI_Controller
                     'id_penjualan' => $idPenjualan,
                     'id_pelanggan' => $dataPlg->id_pelanggan,
                     'date' => $tgl,
-                    'ongkir' => $ongkir->harga,
+                    // 'ongkir' => $ongkir->harga,
                     'kurir' => $kurir,
                     'no_kendaraan' => $plat
                 ];
@@ -327,7 +327,7 @@ class Data_pengiriman extends CI_Controller
                     'id_penjualan' => $idPenjualan,
                     'id_pelanggan' => $dataPlg->id_pelanggan,
                     'date' => $tgl,
-                    'ongkir' => $ongkir->harga,
+                    // 'ongkir' => $ongkir->harga,
                     'kurir' => $kurir,
                     'no_kendaraan' => $plat,
                     'penerima' => $penerima,

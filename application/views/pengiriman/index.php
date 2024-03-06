@@ -26,7 +26,7 @@ if ($this->session->flashdata('error')) {
 ?>
 
 
-<div class="col-sm-12 col-md-10">
+<!-- <div class="col-sm-12 col-md-10">
     <h5 class="mb-3">Ongkos Pengiriman</h5>
 </div>
 <div class="col-5">
@@ -58,7 +58,7 @@ if ($this->session->flashdata('error')) {
     </table>
 </div>
 
-<hr class="mt-0" />
+<hr class="mt-0" /> -->
 
 <div class="table-responsive">
     <table class="table table-sm table-hover table-striped" id="tables">

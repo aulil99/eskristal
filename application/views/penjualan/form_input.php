@@ -30,7 +30,7 @@
                 <option value="" disabled selected>Pilih Nama Pelanggan</option>
                 <?php foreach ($pelanggan->result() as $p) : ?>
                     <option value="<?= $p->nama; ?>">
-                        <?= $p->nama; ?>
+                        <?= $p->nama . ' ( ' . $p->jenis . ' )'; ?>
                     </option>
                 <?php endforeach; ?>
             </select>
@@ -44,7 +44,7 @@
                 <option value="" disabled selected>Pilih Barang</option>
                 <?php foreach ($data->result() as $d) : ?>
                     <option value="<?= $d->kode_barang; ?>">
-                        <?= $d->nama_barang . ' ( ' . $d->brand . ' )'; ?>
+                        <?= $d->nama_barang . ' ( ' . $d->jenis . ' )'; ?>
                     </option>
                 <?php endforeach; ?>
             </select>

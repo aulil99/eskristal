@@ -78,7 +78,7 @@ if ($this->session->flashdata('alert')) {
             <th scope="col">Brand</th>
             <th scope="col" class="text-center">Qty</th>
             <th scope="col" class="text-center">Harga</th>
-            <th scope="col" class="text-center">Biaya Kirim</th>
+            <!-- <th scope="col" class="text-center">Biaya Kirim</th> -->
             <th scope="col" class="text-center">Total</th>
         </tr>
     </thead>
@@ -107,12 +107,12 @@ if ($this->session->flashdata('alert')) {
                 echo '<td>' . $dt->brand . '</td>';
                 echo '<td>' . $dt->qty . '</td>';
                 echo '<td><span class="float-left">Rp.</span><span class="float-right">' . number_format($dt->harga, 0, ',', '.') . '</span></td>';
-                foreach ($ongkir->result() as $okr) {
-                    if ($dt->jenis == $okr->jenis) :
-                        echo '<td><span class="float-left">Rp.</span><span class="float-right">' . number_format($okr->harga, 0, ',', '.') . '</td>';
-                        $hargaOngkir = $okr->harga;
-                    endif;
-                }
+                // foreach ($ongkir->result() as $okr) {
+                //     if ($dt->jenis == $okr->jenis) :
+                //         echo '<td><span class="float-left">Rp.</span><span class="float-right">' . number_format($okr->harga, 0, ',', '.') . '</td>';
+                //         $hargaOngkir = $okr->harga;
+                //     endif;
+                // }
                 echo '<td><span class="float-left">Rp.</span><span class="float-right">' . number_format(($dt->harga * $dt->qty + $hargaOngkir), 0, ',', '.') . '</span></td>';
                 echo '</tr>';
                 if ($row_penjualan != $dt->row_penjualan) {
@@ -131,7 +131,7 @@ if ($this->session->flashdata('alert')) {
             }
 
             echo '<tr>';
-            echo '<td colspan="9" class="text-center"><b>Total Pemasukan</b></td>';
+            echo '<td colspan="8" class="text-center"><b>Total Pemasukan</b></td>';
             echo '<td><b><span class="float-left">Rp.</span><span class="float-right">' . number_format($total, 0, ',', '.') . '</span></b></td>';
             echo '</tr>';
         } else {

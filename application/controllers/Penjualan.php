@@ -102,10 +102,13 @@ class Penjualan extends CI_Controller
             }
         }
 
+        $pelanggan = $this->m_pelanggan->getAllData('tbl_pelanggan');
+        $barang = $this->m_penjualan->getData('tbl_barang', ['active' => 'Y']);
+
         $data = [
             'title' => 'Tambah Data penjualan Barang',
-            'data' => $this->m_penjualan->getData('tbl_barang', ['active' => 'Y']),
-            'pelanggan' => $this->m_pelanggan->getAllData('tbl_pelanggan'),
+            'data' => $barang,
+            'pelanggan' => $pelanggan,
             'table' => $this->read_cart()
         ];
 

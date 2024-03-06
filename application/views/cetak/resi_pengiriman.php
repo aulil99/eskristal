@@ -83,7 +83,7 @@ function tanggal_indo($tgl)
                 </td>
             </tr>
         <?php endforeach; ?>
-        <tr>
+        <!-- <tr>
             <td colspan="6" class="text-center"><b>Ongkos Kirim</b></td>
             <td>
                 <b>
@@ -93,14 +93,14 @@ function tanggal_indo($tgl)
                     </span>
                 </b>
             </td>
-        </tr>
+        </tr> -->
         <tr>
             <td colspan="6" class="text-center"><b>Total</b></td>
             <td>
                 <b>
                     <span class="float-left">Rp.</span>
                     <span class="float-right pr-3">
-                        <?= number_format($total_pengeluaran + $p->ongkir, 0, ',', '.') . ',-'; ?>
+                        <?= number_format($total_pengeluaran, 0, ',', '.') . ',-'; ?>
                     </span>
                 </b>
             </td>
