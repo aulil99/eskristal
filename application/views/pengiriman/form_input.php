@@ -18,41 +18,21 @@
             </div>
         </div>
     </div>
-
+    
     <div class="form-group row">
-        <label for="nama_pelanggan" class="col-sm-3 col-form-label">Nama Pelanggan</label>
+        <label for="id_penjualan" class="col-sm-3 col-form-label">Nama Pesanan</label>
         <div class="col-sm-9">
-            <select class="custom-select custom-select-sm" id="nama_pelanggan" name="customer" id="customer">
-                <option value="" disabled selected>Pilih Nama Pelanggan</option>
-                <?php foreach ($pelanggan->result() as $p) : ?>
-                    <option value="<?= $p->nama; ?>">
-                        <?= $p->nama; ?>
+            <select class="barang-select custom-select custom-select-sm pilih-barang" name="id_penjualan" id="id_penjualan">
+                <option value="" disabled selected>Pilih Nama Pesanan yang Dituju</option>
+                <?php foreach ($data->result() as $d) : ?>
+                    <option value="<?= $d->id_penjualan; ?>">
+                        <?= $d->nama_pembeli . ' ( ' . $d->tgl_penjualan . ' )'; ?>
                     </option>
                 <?php endforeach; ?>
             </select>
         </div>
     </div>
-
-    <div class="form-group row">
-        <label for="hp" class="col-sm-3 col-form-label">Nomor Telp.</label>
-        <div class="col-sm-9">
-            <input type="text" class="form-control form-control-sm hp <?= (form_error('phone')) ? 'is-invalid' : ''; ?>" id="phone" name="phone" placeholder="Nomor Telephone" value="<?= set_value('phone'); ?>">
-            <div class="invalid-feedback">
-                <?= form_error('phone', '<p class="error-message">', '</p>'); ?>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="alamat_pelanggan" class="col-sm-3 col-form-label">Alamat Pelanggan</label>
-        <div class="col-sm-9">
-            <textarea type="text" class="form-control form-control-sm <?= (form_error('alamat')) ? 'is-invalid' : ''; ?>" id="alamat" required name="alamat" placeholder="Alamat Pelanggan" value="<?= set_value('alamat'); ?>" cols="10" rows="5"></textarea>
-            <div class="invalid-feedback">
-                <?= form_error('alamat', '<p class="error-message">', '</p>'); ?>
-            </div>
-        </div>
-    </div>
-
+    
     <div class="form-group row">
         <label for="kurir" class="col-sm-3 col-form-label">Kurir</label>
         <div class="col-sm-9">
@@ -73,19 +53,6 @@
         </div>
     </div>
 
-    <div class="form-group row">
-        <label for="id_penjualan" class="col-sm-3 col-form-label">Nama Pesanan</label>
-        <div class="col-sm-9">
-            <select class="barang-select custom-select custom-select-sm pilih-barang" name="id_penjualan" id="id_penjualan">
-                <option value="" disabled selected>Pilih Nama Pesanan yang Dituju</option>
-                <?php foreach ($data->result() as $d) : ?>
-                    <option value="<?= $d->id_penjualan; ?>">
-                        <?= $d->nama_pembeli . ' ( ' . $d->tgl_penjualan . ' )'; ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-    </div>
 
     <div class="form-group row">
         <div class="col-sm-9">

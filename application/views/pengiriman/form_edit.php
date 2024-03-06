@@ -19,37 +19,21 @@
             </div>
         </div>
     </div>
-
+    
     <div class="form-group row">
-        <label for="customer" class="col-sm-3 col-form-label">Pelanggan</label>
+        <label for="id_penjualan" class="col-sm-3 col-form-label">Nama Pembeli</label>
         <div class="col-sm-9">
-            <input type="text" class="form-control form-control-sm <?= (form_error('customer')) ? 'is-invalid' : ''; ?>" id="customer" required autofocus name="customer" placeholder="Nama Pelanggan" value="<?= (set_value('customer')) ? set_value('customer') : $data->customer; ?>">
-            <div class="invalid-feedback">
-                <?= form_error('customer', '<p class="error-message">', '</p>'); ?>
-            </div>
+            <select class="barang-select custom-select custom-select-sm pilih-barang" name="id_penjualan" id="id_penjualan">
+                <option value="<?= (set_value('id_penjualan')) ? set_value('id_penjualan') : $data->id_penjualan; ?>" selected><?= $pembeli->nama_pembeli . ' ( ' . $data->id_penjualan . ' )'; ?></option>
+                <?php foreach ($penjualan->result() as $d) : ?>
+                    <option value="<?= $d->id_penjualan; ?>">
+                        <?= $d->nama_pembeli . ' ( ' . $d->tgl_penjualan . ' )'; ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
         </div>
     </div>
-
-    <div class="form-group row">
-        <label for="hp" class="col-sm-3 col-form-label">Nomor Telp.</label>
-        <div class="col-sm-9">
-            <input type="text" class="form-control form-control-sm hp <?= (form_error('hp')) ? 'is-invalid' : ''; ?>" id="hp" name="phone" placeholder="Nomor Telephone" value="<?= (set_value('phone')) ? set_value('phone') : $data->phone; ?>">
-            <div class="invalid-feedback">
-                <?= form_error('hp', '<p class="error-message">', '</p>'); ?>
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group row">
-        <label for="alamat" class="col-sm-3 col-form-label">Alamat Pelanggan</label>
-        <div class="col-sm-9">
-            <textarea type="text" class="form-control form-control-sm <?= (form_error('alamat')) ? 'is-invalid' : ''; ?>" id="alamat" required autofocus name="alamat" placeholder="Alamat Pelanggan" value="" name="" id="" cols="10" rows="5"><?= (set_value('alamat')) ? set_value('alamat') : $data->alamat; ?></textarea>
-            <div class="invalid-feedback">
-                <?= form_error('alamat', '<p class="error-message">', '</p>'); ?>
-            </div>
-        </div>
-    </div>
-
+    
     <div class="form-group row">
         <label for="kurir" class="col-sm-3 col-form-label">Kurir</label>
         <div class="col-sm-9">
@@ -70,19 +54,6 @@
         </div>
     </div>
 
-    <div class="form-group row">
-        <label for="id_penjualan" class="col-sm-3 col-form-label">Nama Pembeli</label>
-        <div class="col-sm-9">
-            <select class="barang-select custom-select custom-select-sm pilih-barang" name="id_penjualan" id="id_penjualan">
-                <option value="<?= (set_value('id_penjualan')) ? set_value('id_penjualan') : $data->id_penjualan; ?>" selected><?= $pembeli->nama_pembeli . ' ( ' . $data->id_penjualan . ' )'; ?></option>
-                <?php foreach ($penjualan->result() as $d) : ?>
-                    <option value="<?= $d->id_penjualan; ?>">
-                        <?= $d->nama_pembeli . ' ( ' . $d->tgl_penjualan . ' )'; ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-        </div>
-    </div>
 
     <div class="form-group row">
         <label for="penerima" class="col-sm-3 col-form-label">Penerima</label>

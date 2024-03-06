@@ -12,6 +12,7 @@ class Laporan extends CI_Controller
         $this->load->model('m_laporan');
         $this->load->model('m_penjualan');
         $this->load->model('m_pengiriman');
+        $this->load->model('m_pelanggan');
 
         header('Last-Modified:' . gmdate('D, d M Y H:i:s') . 'GMT');
         header('Cache-Control: no-cache, must-revalidate, max-age=0');
@@ -90,19 +91,20 @@ class Laporan extends CI_Controller
         ];
         $getDelivery = $this->m_pengiriman->getData('tbl_pengiriman', $where);
         $rowData = $getDelivery->row();
-        $idP = $rowData->id_penjualan;
-
+        
         //ambil data
-        $getData = $this->m_penjualan->getDataPenjualan($this->security->xss_clean($idP));
+        $getData = $this->m_penjualan->getDataPenjualan($this->security->xss_clean($rowData->id_penjualan));
+        $getPelanggan = $this->m_pelanggan->getData('tbl_pelanggan', ['id_pelanggan' => $rowData->id_pelanggan]);
 
         if ($getData->num_rows() < 1) {
             redirect('dashboard');
         }
 
         $data = [
-            'title' => 'Detail Penjualan ' . $idP,
+            'title' => 'Cetak Resi Pengiriman ' . $rowData->id_penjualan,
             'data' => $getData,
-            'pengirim' => $getDelivery
+            'pengirim' => $getDelivery,
+            'pelanggan' => $getPelanggan
         ];
 
         $this->template->cetak('cetak/resi_pengiriman', $data);

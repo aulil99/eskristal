@@ -37,7 +37,7 @@ class Data_pengiriman extends CI_Controller
 
     public function ubah_ongkir($id)
     {
-        $this->is_login();
+        $this->is_admin();
 
         if ($this->input->post('submit', TRUE) == 'submit') {
             //validasi form
@@ -120,46 +120,8 @@ class Data_pengiriman extends CI_Controller
             );
 
             $this->form_validation->set_rules(
-                'customer',
-                'Nama Penerima',
-                "required|min_length[2]|max_length[100]|regex_match[/^[A-Z a-z.0-9']+$/]",
-                array(
-                    'required' => '{field} wajib diisi',
-                    'min_length' => '{field} minimal 2 karakter',
-                    'max_length' => '{field} maksimal 100 karakter',
-                    'regex_match' => '{field} tidak valid'
-                )
-            );
-
-            if ($this->input->post('phone', TRUE) != '') {
-                $this->form_validation->set_rules(
-                    'phone',
-                    'Nomor Telp.',
-                    "required|min_length[8]|max_length[15]|regex_match[/^[0-9]+$/]",
-                    array(
-                        'required' => '{field} wajib diisi',
-                        'min_length' => '{field} minimal 8 karakter',
-                        'max_length' => '{field} maksimal 15 karakter',
-                        'regex_match' => '{field} hanya boleh angka'
-                    )
-                );
-            }
-
-            $this->form_validation->set_rules(
                 'id_penjualan',
                 'id penjualan',
-                "required|min_length[10]|max_length[255]|regex_match[/^[A-Z a-z.0-9-,']+$/]",
-                array(
-                    'required' => '{field} wajib diisi',
-                    'min_length' => '{field} minimal 5 karakter',
-                    'max_length' => '{field} maksimal 30 karakter',
-                    'regex_match' => 'Data {field} yang anda masukkan tidak valid'
-                )
-            );
-
-            $this->form_validation->set_rules(
-                'alamat',
-                'Alamat',
                 "required|min_length[10]|max_length[255]|regex_match[/^[A-Z a-z.0-9-,']+$/]",
                 array(
                     'required' => '{field} wajib diisi',
@@ -199,13 +161,13 @@ class Data_pengiriman extends CI_Controller
                 $id = 'ID' . time();
                 $idPenjualan = $this->security->xss_clean($this->input->post('id_penjualan', TRUE));
                 $tgl = date('Y-m-d', strtotime(str_replace('/', '-', $this->security->xss_clean($this->input->post('date', TRUE)))));
-                $nama = $this->security->xss_clean($this->input->post('customer', TRUE));
-                $telp = $this->security->xss_clean($this->input->post('phone', TRUE));
-                $alamat = $this->security->xss_clean($this->input->post('alamat', TRUE));
                 $kurir = $this->security->xss_clean($this->input->post('kurir', TRUE));
                 $plat = $this->security->xss_clean($this->input->post('no_kendaraan', TRUE));
 
-                $plg = $this->m_pelanggan->getData('tbl_pelanggan', ['nama' => $nama]);
+                $penjualan = $this->m_penjualan->getData('tbl_penjualan', ['id_penjualan' => $idPenjualan]);
+                $dataPenjualan = $penjualan->row();
+
+                $plg = $this->m_pelanggan->getData('tbl_pelanggan', ['nama' => $dataPenjualan->nama_pembeli]);
                 $dataPlg = $plg->row();
 
                 $dataOngkir = $this->m_ongkir->getData('tbl_ongkir', ['jenis' => $dataPlg->jenis]);
@@ -214,11 +176,9 @@ class Data_pengiriman extends CI_Controller
                 $data_simpan = [
                     'id_pengiriman' => $id,
                     'id_penjualan' => $idPenjualan,
+                    'id_pelanggan' => $dataPlg->id_pelanggan,
                     'date' => $tgl,
-                    'customer' => $nama,
                     'ongkir' => $ongkir->harga,
-                    'phone' => $telp,
-                    'alamat' => $alamat,
                     'kurir' => $kurir,
                     'no_kendaraan' => $plat
                 ];
@@ -270,46 +230,8 @@ class Data_pengiriman extends CI_Controller
             );
 
             $this->form_validation->set_rules(
-                'customer',
-                'Nama Customer',
-                "required|min_length[2]|max_length[100]|regex_match[/^[A-Z a-z.0-9']+$/]",
-                array(
-                    'required' => '{field} wajib diisi',
-                    'min_length' => '{field} minimal 2 karakter',
-                    'max_length' => '{field} maksimal 100 karakter',
-                    'regex_match' => '{field} tidak valid'
-                )
-            );
-
-            if ($this->input->post('phone', TRUE) != '') {
-                $this->form_validation->set_rules(
-                    'phone',
-                    'Nomor Telp.',
-                    "required|min_length[8]|max_length[15]|regex_match[/^[0-9]+$/]",
-                    array(
-                        'required' => '{field} wajib diisi',
-                        'min_length' => '{field} minimal 8 karakter',
-                        'max_length' => '{field} maksimal 15 karakter',
-                        'regex_match' => '{field} hanya boleh angka'
-                    )
-                );
-            }
-
-            $this->form_validation->set_rules(
                 'id_penjualan',
                 'id penjualan',
-                "required|min_length[10]|max_length[255]|regex_match[/^[A-Z a-z.0-9-,']+$/]",
-                array(
-                    'required' => '{field} wajib diisi',
-                    'min_length' => '{field} minimal 5 karakter',
-                    'max_length' => '{field} maksimal 30 karakter',
-                    'regex_match' => 'Data {field} yang anda masukkan tidak valid'
-                )
-            );
-
-            $this->form_validation->set_rules(
-                'alamat',
-                'Alamat',
                 "required|min_length[10]|max_length[255]|regex_match[/^[A-Z a-z.0-9-,']+$/]",
                 array(
                     'required' => '{field} wajib diisi',
@@ -385,22 +307,27 @@ class Data_pengiriman extends CI_Controller
                 $idPengiriman = $this->security->xss_clean($this->input->post('id_pengiriman', TRUE));
                 $idPenjualan = $this->security->xss_clean($this->input->post('id_penjualan', TRUE));
                 $tgl = date('Y-m-d', strtotime(str_replace('/', '-', $this->security->xss_clean($this->input->post('date', TRUE)))));
-                $nama = $this->security->xss_clean($this->input->post('customer', TRUE));
-                $telp = $this->security->xss_clean($this->input->post('phone', TRUE));
-                $alamat = $this->security->xss_clean($this->input->post('alamat', TRUE));
                 $kurir = $this->security->xss_clean($this->input->post('kurir', TRUE));
                 $plat = $this->security->xss_clean($this->input->post('no_kendaraan', TRUE));
                 $penerima = $this->security->xss_clean($this->input->post('penerima', TRUE));
                 $keterangan = $this->security->xss_clean($this->input->post('keterangan', TRUE));
                 $status = $this->security->xss_clean($this->input->post('status', TRUE));
 
+                $penjualan = $this->m_penjualan->getData('tbl_penjualan', ['id_penjualan' => $idPenjualan]);
+                $dataPenjualan = $penjualan->row();
+
+                $plg = $this->m_pelanggan->getData('tbl_pelanggan', ['nama' => $dataPenjualan->nama_pembeli]);
+                $dataPlg = $plg->row();
+
+                $dataOngkir = $this->m_ongkir->getData('tbl_ongkir', ['jenis' => $dataPlg->jenis]);
+                $ongkir = $dataOngkir->row();
+
                 $data_update = [
                     'id_pengiriman' => $id,
                     'id_penjualan' => $idPenjualan,
+                    'id_pelanggan' => $dataPlg->id_pelanggan,
                     'date' => $tgl,
-                    'customer' => $nama,
-                    'phone' => $telp,
-                    'alamat' => $alamat,
+                    'ongkir' => $ongkir->harga,
                     'kurir' => $kurir,
                     'no_kendaraan' => $plat,
                     'penerima' => $penerima,
@@ -496,7 +423,7 @@ class Data_pengiriman extends CI_Controller
                 $row[] = $no;
                 $row[] = $i->id_pengiriman;
                 $row[] = $i->date;
-                $row[] = $i->customer;
+                $row[] = $i->nama;
                 $row[] = ($i->phone != '') ? $i->phone : '-';
                 $row[] = $i->alamat;
                 $row[] = $i->kurir;

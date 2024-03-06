@@ -4,9 +4,21 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class M_pengiriman extends CI_Model
 {
     var $table           = 'tbl_pengiriman';
-    var $column_order    =  array(null, 'id_pengiriman', 'id_penjualan', 'customer', 'ongkir', 'phone', 'alamat', 'kurir', "no_kendaraan", "no_po", "penerima", "keterangan", "status", null); //set column field database untuk datatable order
-    var $column_search   =  array('id_pengiriman', 'id_penjualan', 'customer', 'ongkir', 'phone', 'alamat', 'kurir', "no_kendaraan", "no_po", "penerima", "keterangan", "status"); //set column field database untuk datatable search
+    // var $column_order    =  array(null, 'id_pengiriman', 'id_penjualan', 'customer', 'ongkir', 'phone', 'alamat', 'kurir', "no_kendaraan", "no_po", "penerima", "keterangan", "status", null); //set column field database untuk datatable order
+    // var $column_search   =  array('id_pengiriman', 'id_penjualan', 'customer', 'ongkir', 'phone', 'alamat', 'kurir', "no_kendaraan", "no_po", "penerima", "keterangan", "status"); //set column field database untuk datatable search
     var $order = array('id_pengiriman' => 'asc'); // default order
+
+    var $select = array("a.id_pengiriman as id_pengiriman", "b.nama as nama", "b.phone as phone", "b.alamat as alamat", "b.fasilitas as fasilitas", "a.date as date", "a.ongkir as ongkir", "a.kurir as kurir", "a.no_kendaraan as no_kendaraan", "a.penerima as penerima", "a.keterangan as keterangan", "a.status as status");
+    var $joinTable = "tbl_pengiriman a LEFT JOIN tbl_pelanggan b ON(a.id_pelanggan = b.id_pelanggan)";
+    var $column_order    =  array(null, 'a.id_pengiriman', 'b.nama', 'b.phone', 'b.alamat', 'b.fasilitas', 'a.date', 'a.ongkir', "a.kurir", "a.no_kendaraan", "a.penerima", "a.keterangan", "a.status", null); //set column field database untuk datatable order
+    var $column_search   =  array('a.id_pengiriman', 'b.nama', 'b.phone', 'b.alamat', 'b.fasilitas', 'a.date', 'a.ongkir', "a.kurir", "a.no_kendaraan", "a.penerima", "a.keterangan", "a.status");
+        // $sql = "select a.id_pengiriman as id_pengiriman, b.nama as nama, b.phone as phone, b.alamat as alamat, b.fasilitas as fasilitas, a.date as date, a.ongkir as ongkir, a.kurir as kurir, a.no_kendaraan as no_kendaraan, a.penerima as penerima, a.keterangan as keterangan, a.status as status from tbl_pengiriman a left join tbl_pelanggan b on a.id_pelanggan = b.id_pelanggan";
+
+        // $this->db->select($select);
+        // $this->db->from($table);
+
+        // // $this->db->from($this->table);
+        // $this->db->get();
 
     function __construct()
     {
@@ -47,7 +59,9 @@ class M_pengiriman extends CI_Model
     private function _get_datatables_query()
     {
 
-        $this->db->from($this->table);
+        $this->db->select($this->select);
+        $this->db->from($this->joinTable);
+        $this->db->group_by(array('a.id_pengiriman', 'b.nama', 'b.phone', 'b.alamat', 'b.fasilitas', 'a.date', 'a.ongkir', "a.kurir", "a.no_kendaraan", "a.penerima", "a.keterangan", "a.status"));
 
         $i = 0;
 

@@ -3,6 +3,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 $d = $data->row();
 $p = $pengirim->row();
+$plg = $pelanggan->row();
 
 function tanggal_indo($tgl)
 {
@@ -24,15 +25,18 @@ function tanggal_indo($tgl)
 <hr class="mt-0" />
 <h6 class="mb-2">ID Pesanan</h6>
 <p class="text-muted display-5 mt-1 mb-2">
-    #<?= $d->id_penjualan; ?> ( <?= tanggal_indo($d->tgl_penjualan); ?> )
+    #<?= $p->id_penjualan; ?> ( <?= tanggal_indo($d->tgl_penjualan); ?> )
 </p>
 <h6 class="mb-1 mt-2">Nama Pembeli</h6>
-<p class="text-muted display-5 mt-1 mb-2"><?= $d->nama_pembeli; ?></p>
+<p class="text-muted display-5 mt-1 mb-2"><?= $plg->nama; ?></p>
 
 <h6 class="mb-1 mt-2">No. HP</h6>
-<p class="text-muted display-6 mt-1 mb-2"><?= $p->phone; ?></p>
+<p class="text-muted display-6 mt-1 mb-2"><?= $plg->phone; ?></p>
 <h6 class="mb-1 mt-2">Alamat</h6>
-<p class="text-muted display-6 mt-1 mb-2"><?= $p->alamat; ?></p>
+<p class="text-muted display-6 mt-1 mb-2"><?= $plg->alamat; ?></p>
+<h6 class="mb-1 mt-2">Fasilitas Pelanggan</h6>
+<p class="text-muted display-6 mt-1 mb-2"><?= $plg->fasilitas; ?></p>
+<hr>
 <h6 class="mb-1 mt-2">Petugas Kurir</h6>
 <p class="text-muted display-6 mt-1 mb-2"><?= $p->kurir; ?> (<?= $p->no_kendaraan; ?>) </p>
 <h6 class="mb-1 mt-2">Kasir</h6>
