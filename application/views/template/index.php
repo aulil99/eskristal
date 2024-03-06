@@ -4,7 +4,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title; ?></title>
@@ -23,84 +22,14 @@
     <link rel="stylesheet" href="<?= base_url('assets/css/select2.min.css'); ?>">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="<?= base_url('assets/css/style.css'); ?>">
-    <style>
-        body {
-            font-family: Roboto;
-            color: #4d4d4d;
-            background: #fff;
-            overflow-x: hidden;
-        }
-
-        h4 {
-            color: #4d4d4d;
-        }
-
-        .display-5 {
-            font-size: 1rem;
-            font-weight: 300;
-            line-height: 1.2;
-        }
-
-        .error-message {
-            font-size: 13px;
-        }
-
-        .invalid-feedback>p {
-            margin-bottom: 0px;
-        }
-
-        #modal-password {
-            top: 20%;
-        }
-
-        .custom-select>option {
-            font-family: Roboto;
-        }
-
-        .table>tbody>tr>td {
-            vertical-align: middle;
-        }
-
-        #tables {
-            width: 100% !important;
-        }
-
-        .btn-light {
-            background-color: #f6f6f6;
-            border-color: #f1f1f2;
-        }
-
-        .select2-container .select2-selection--single {
-            box-sizing: border-box;
-            cursor: pointer;
-            display: block;
-            height: calc(1.5em + 0.5rem + 2px);
-            padding-bottom: 0.25rem;
-            padding-left: 0.25rem;
-            font-size: 0.875rem;
-            user-select: none;
-            -webkit-user-select: none;
-        }
-
-        .select2-container--default .select2-selection--single .select2-selection__rendered {
-            color: #495057;
-            line-height: 28px;
-        }
-
-        .select2-container--default .select2-selection--single {
-            border: 1px solid #ced4da;
-            border-radius: 4px;
-        }
-    </style>
+    <link rel="stylesheet" href="<?= base_url('assets/css/template.css'); ?>">
 </head>
 
 <body>
     <div class="wrapper d-flex align-items-stretch">
         <?= $navbar; ?>
-
         <!-- Page Content  -->
         <div id="content" class="p-4 p-md-5">
-
             <nav class="navbar navbar-expand-lg navbar-light bg-light" style="padding: 0px 10px;">
                 <div class="container-fluid">
 
