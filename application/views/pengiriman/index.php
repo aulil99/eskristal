@@ -30,6 +30,10 @@ if ($this->session->flashdata('error')) {
     <h5 class="mb-3">Ongkos Pengiriman</h5>
 </div>
 <div class="col-5">
+    <?php
+    //tampilkan menu di bawah ini jika yang login pegawai
+    if ($this->session->userdata('level') == 'admin') :
+    ?>
     <table class="table table-sm">
         <thead>
             <tr>
@@ -44,6 +48,23 @@ if ($this->session->flashdata('error')) {
                     <td><?= $o->jenis; ?></td>
                     <td><?= $o->harga; ?></td>
                     <td><a href="<?= site_url('edit_ongkir/') . $o->id; ?>" class="btn btn-warning btn-sm text-white"><i class="fa fa-pencil"></i></a></td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <?php endif; ?>
+    <table class="table table-sm">
+        <thead>
+            <tr>
+                <th scope="col">Jenis Pelanggan</th>
+                <th scope="col">Harga Ongkir</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($ongkir->result() as $o) : ?>
+                <tr>
+                    <td><?= $o->jenis; ?></td>
+                    <td><?= $o->harga; ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>
