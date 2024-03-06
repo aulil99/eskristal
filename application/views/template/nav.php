@@ -47,8 +47,18 @@
             //tampilkan menu di bawah ini jika yang login pegawai
             if ($this->session->userdata('level') == 'pegawai') :
             ?>
+                <li <?= (in_array(strtolower($this->uri->segment(1)), ['barang', 'tambah_barang', 'edit_barang'])) ? 'class="active"' : ''; ?>>
+                    <a href="<?= site_url('barang'); ?>"><i class="fa fa-cubes"></i> Data Barang</a>
+                </li>
+
                 <li <?= (in_array(strtolower($this->uri->segment(1)), ['stok_barang'])) ? 'class="active"' : ''; ?>>
                     <a href="<?= site_url('stok_barang'); ?>"><i class="fa fa-cubes"></i> Data Stok Barang</a>
+                </li>
+
+                <li <?= (in_array(strtolower($this->uri->segment(1)), ['pengiriman', 'tambah_pengiriman', 'edit_pengiriman'])) ? 'class="active"' : ''; ?>>
+                    <a href="<?= site_url('pengiriman'); ?>">
+                        <i class="fa fa-truck"></i> Pengiriman
+                    </a>
                 </li>
             <?php
             endif;

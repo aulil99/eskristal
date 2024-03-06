@@ -21,7 +21,7 @@ class Data_barang extends CI_Controller
     {
         //cek apakah user yang login adalah admin atau bukan
         //jika bukan maka alihkan ke dashboard
-        $this->is_admin();
+        $this->is_login();
 
         $data = [
             'title' => 'Data Barang'
@@ -34,7 +34,7 @@ class Data_barang extends CI_Controller
     {
         //cek apakah user yang login adalah admin atau bukan
         //jika bukan maka alihkan ke dashboard
-        $this->is_admin();
+        $this->is_login();
 
         if ($this->input->post('submit', TRUE) == 'submit') {
             //set rules form validasi
@@ -125,7 +125,7 @@ class Data_barang extends CI_Controller
 
         //cek apakah user yang login adalah admin atau bukan
         //jika bukan maka alihkan ke dashboard
-        $this->is_admin();
+        $this->is_login();
 
         //cek uri
         if ($kode_barang == '') {
@@ -265,7 +265,7 @@ class Data_barang extends CI_Controller
 
     public function ajax_barang()
     {
-        $this->is_admin();
+        $this->is_login();
         //cek apakah request berupa ajax atau bukan, jika bukan maka redirect ke home
         if ($this->input->is_ajax_request()) {
             //ambil list data
@@ -347,6 +347,13 @@ class Data_barang extends CI_Controller
     private function is_admin()
     {
         if (!$this->session->userdata('level') || $this->session->userdata('level') != 'admin') {
+            redirect('dashboard');
+        }
+    }
+
+    private function is_login()
+    {
+        if (!$this->session->userdata('UserID')) {
             redirect('dashboard');
         }
     }

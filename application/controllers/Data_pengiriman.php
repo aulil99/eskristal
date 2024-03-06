@@ -25,7 +25,7 @@ class Data_pengiriman extends CI_Controller
 
     public function index()
     {
-        $this->is_admin();
+        $this->is_login();
 
         $data = [
             'title' => 'Data Pengiriman',
@@ -37,7 +37,7 @@ class Data_pengiriman extends CI_Controller
 
     public function ubah_ongkir($id)
     {
-        $this->is_admin();
+        $this->is_login();
 
         if ($this->input->post('submit', TRUE) == 'submit') {
             //validasi form
@@ -104,7 +104,7 @@ class Data_pengiriman extends CI_Controller
 
     public function tambah_pengiriman()
     {
-        $this->is_admin();
+        $this->is_login();
         //ketika user mengklik submit
         if ($this->input->post('submit', TRUE) == 'submit') {
             //validasi form
@@ -211,17 +211,17 @@ class Data_pengiriman extends CI_Controller
                 $dataOngkir = $this->m_ongkir->getData('tbl_ongkir', ['jenis' => $dataPlg->jenis]);
                 $ongkir = $dataOngkir->row();
 
-                    $data_simpan = [
-                        'id_pengiriman' => $id,
-                        'id_penjualan' => $idPenjualan,
-                        'date' => $tgl,
-                        'customer' => $nama,
-                        'ongkir' => $ongkir->harga,
-                        'phone' => $telp,
-                        'alamat' => $alamat,
-                        'kurir' => $kurir,
-                        'no_kendaraan' => $plat
-                    ];
+                $data_simpan = [
+                    'id_pengiriman' => $id,
+                    'id_penjualan' => $idPenjualan,
+                    'date' => $tgl,
+                    'customer' => $nama,
+                    'ongkir' => $ongkir->harga,
+                    'phone' => $telp,
+                    'alamat' => $alamat,
+                    'kurir' => $kurir,
+                    'no_kendaraan' => $plat
+                ];
 
                 $simpan = $this->m_pengiriman->save('tbl_pengiriman', $data_simpan);
 
@@ -244,7 +244,7 @@ class Data_pengiriman extends CI_Controller
 
     public function edit_pengiriman($id)
     {
-        $this->is_admin();
+        $this->is_login();
 
         //ketika user mengklik submit
         if ($this->input->post('submit', TRUE) == 'submit') {
@@ -445,7 +445,7 @@ class Data_pengiriman extends CI_Controller
     public function hapus_data()
     {
         //cek login
-        $this->is_admin();
+        $this->is_login();
         //validasi request ajax
         if ($this->input->is_ajax_request()) {
             //validasi
@@ -480,7 +480,7 @@ class Data_pengiriman extends CI_Controller
 
     public function ajax_pengiriman()
     {
-        $this->is_admin();
+        $this->is_login();
         //cek apakah request berupa ajax atau bukan, jika bukan maka redirect ke home
         if ($this->input->is_ajax_request()) {
             //ambil list data
@@ -530,6 +530,13 @@ class Data_pengiriman extends CI_Controller
     private function is_admin()
     {
         if (!$this->session->userdata('level') || $this->session->userdata('level') != 'admin') {
+            redirect('dashboard');
+        }
+    }
+
+    private function is_login()
+    {
+        if (!$this->session->userdata('UserID')) {
             redirect('dashboard');
         }
     }
