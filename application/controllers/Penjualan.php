@@ -62,8 +62,12 @@ class Penjualan extends CI_Controller
                 $pembeli = $this->security->xss_clean($this->input->post('pembeli', TRUE));
                 $user = $this->session->userdata('UserID');
 
+                $plg = $this->m_pelanggan->getData('tbl_pelanggan', ['nama' => $pembeli]);
+                $dataPlg = $plg->row();
+
                 $data_penjualan = [
                     'id_penjualan' => $id,
+                    'id_pelanggan' => $dataPlg->id_pelanggan,
                     'tgl_penjualan' => $tgl,
                     'nama_pembeli' => $pembeli,
                     'id_user' => $user

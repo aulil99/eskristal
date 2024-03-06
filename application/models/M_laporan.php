@@ -11,8 +11,11 @@ class M_laporan extends CI_Model
     function getDataPengiriman($tanggal)
     {
         $table = 'tbl_pengiriman';
-
-        $this->db->from($table);
+        $select = "a.id_pengiriman as id_pengiriman, b.nama as nama, b.phone as phone, b.alamat as alamat, b.fasilitas as fasilitas, a.date as date, a.ongkir as ongkir, a.kurir as kurir, a.no_kendaraan as no_kendaraan, a.penerima as penerima, a.keterangan as keterangan, a.status as status";
+        $joinTable = "tbl_pengiriman a LEFT JOIN tbl_pelanggan b ON(a.id_pelanggan = b.id_pelanggan)";
+        
+        $this->db->select($select);
+        $this->db->from($joinTable);
         $this->db->where("date", $tanggal);
 
         return $this->db->get();
@@ -144,11 +147,12 @@ class M_laporan extends CI_Model
 
     function getDataPenjualanHarian($tanggal)
     {
-        $select = 'p.id_penjualan AS id_penjualan, nama_barang, brand, dp.harga AS harga, qty, nama_pembeli, (SELECT COUNT(*) FROM tbl_detail_penjualan WHERE id_penjualan = p.id_penjualan) AS row';
+        $select = 'p.id_penjualan AS id_penjualan, nama_barang, brand, dp.harga AS harga, qty, nama_pembeli, c.jenis AS jenis, (SELECT COUNT(*) FROM tbl_detail_penjualan WHERE id_penjualan = p.id_penjualan) AS row';
 
         $table = 'tbl_penjualan p
                     JOIN tbl_detail_penjualan dp ON(p.id_penjualan = dp.id_penjualan)
-                    LEFT JOIN tbl_barang b ON(dp.id_barang = b.kode_barang)';
+                    LEFT JOIN tbl_barang b ON(dp.id_barang = b.kode_barang)
+                    LEFT JOIN tbl_pelanggan c ON(p.id_pelanggan = c.id_pelanggan)';
 
         $where = ['p.tgl_penjualan' => $tanggal];
 
@@ -164,11 +168,12 @@ class M_laporan extends CI_Model
         $tgl1 = $tahun . '-' . $bulan . '-01';
         $tgl2 = $tahun . '-' . $bulan . '-31';
 
-        $select = 'p.id_penjualan AS id_penjualan, nama_barang, brand, dp.harga AS harga, qty, nama_pembeli, (SELECT COUNT(*) FROM tbl_detail_penjualan WHERE id_penjualan = p.id_penjualan) AS row_penjualan, (SELECT COUNT(*) FROM tbl_penjualan JOIN tbl_detail_penjualan dp ON(tbl_penjualan.id_penjualan = dp.id_penjualan) WHERE tgl_penjualan = p.tgl_penjualan) AS row_tanggal, tgl_penjualan';
+        $select = 'p.id_penjualan AS id_penjualan, nama_barang, brand, dp.harga AS harga, qty, nama_pembeli, c.jenis AS jenis, (SELECT COUNT(*) FROM tbl_detail_penjualan WHERE id_penjualan = p.id_penjualan) AS row_penjualan, (SELECT COUNT(*) FROM tbl_penjualan JOIN tbl_detail_penjualan dp ON(tbl_penjualan.id_penjualan = dp.id_penjualan) WHERE tgl_penjualan = p.tgl_penjualan) AS row_tanggal, tgl_penjualan';
 
         $table = 'tbl_penjualan p
                     JOIN tbl_detail_penjualan dp ON(p.id_penjualan = dp.id_penjualan)
-                    LEFT JOIN tbl_barang b ON(dp.id_barang = b.kode_barang)';
+                    LEFT JOIN tbl_barang b ON(dp.id_barang = b.kode_barang)
+                    LEFT JOIN tbl_pelanggan c ON(p.id_pelanggan = c.id_pelanggan)';
 
         $where = ['p.tgl_penjualan >=' => $tgl1, 'p.tgl_penjualan <=' => $tgl2];
 

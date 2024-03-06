@@ -13,6 +13,7 @@ class Laporan extends CI_Controller
         $this->load->model('m_penjualan');
         $this->load->model('m_pengiriman');
         $this->load->model('m_pelanggan');
+        $this->load->model('m_ongkir');
 
         header('Last-Modified:' . gmdate('D, d M Y H:i:s') . 'GMT');
         header('Cache-Control: no-cache, must-revalidate, max-age=0');
@@ -68,7 +69,7 @@ class Laporan extends CI_Controller
         $this->is_login();
 
         if ($this->cekTanggal($date) == false) {
-            redirect('stok_harian');
+            redirect('laporan_pengiriman');
         }
 
         $getData = $this->m_laporan->getDataPengiriman($date);
@@ -478,11 +479,13 @@ class Laporan extends CI_Controller
         }
 
         $getData = $this->m_laporan->getDataPenjualanHarian(date('Y-m-d', strtotime(str_replace('/', '-', $tanggal))));
+        $getOngkir = $this->m_ongkir->getAllData('tbl_ongkir');
 
         $data = [
             'title' => 'Laporan Harian Penjualan Barang',
             'tanggal' => $tanggal,
-            'data' => $getData
+            'data' => $getData,
+            'ongkir' => $getOngkir
         ];
 
         $this->template->kasir('laporan/penjualan_harian', $data);
@@ -497,11 +500,13 @@ class Laporan extends CI_Controller
         }
 
         $getData = $this->m_laporan->getDataPenjualanHarian($date);
+        $getOngkir = $this->m_ongkir->getAllData('tbl_ongkir');
 
         $data = [
             'title' => 'Laporan Harian Penjualan Barang',
             'tanggal' => $date,
-            'data' => $getData
+            'data' => $getData,
+            'ongkir' => $getOngkir
         ];
 
         $this->template->cetak('cetak/penjualan_harian', $data);
@@ -551,12 +556,14 @@ class Laporan extends CI_Controller
         }
 
         $getData = $this->m_laporan->getDataPenjualanBulanan($this->convert_bulan($bulan), $tahun);
+        $getOngkir = $this->m_ongkir->getAllData('tbl_ongkir');
 
         $data = [
             'title' => 'Laporan Bulanan Penjualan Barang',
             'bulan' => $bulan,
             'tahun' => $tahun,
-            'data' => $getData
+            'data' => $getData,
+            'ongkir' => $getOngkir
         ];
 
         $this->template->kasir('laporan/penjualan_bulanan', $data);
@@ -577,12 +584,14 @@ class Laporan extends CI_Controller
         }
 
         $getData = $this->m_laporan->getDataPenjualanBulanan($this->convert_bulan($exp[0]), $exp[1]);
+        $getOngkir = $this->m_ongkir->getAllData('tbl_ongkir');
 
         $data = [
             'title' => 'Laporan Bulanan Penjualan Barang',
             'bulan' => $exp[0],
             'tahun' => $exp[1],
-            'data' => $getData
+            'data' => $getData,
+            'ongkir' => $getOngkir
         ];
 
         $this->template->cetak('cetak/penjualan_bulanan', $data);

@@ -34,15 +34,14 @@ if ($this->session->flashdata('alert')) {
 <table class="table table-sm table-bordered mt-3">
     <thead class="thead-dark">
         <tr>
-            <th scope="col">#</th>
             <th scope="col">ID Pengiriman</th>
-            <th scope="col">ID Pesanan</th>
             <th scope="col">Tanggal</th>
             <th scope="col">Pelanggan</th>
             <th scope="col">No HP</th>
             <th scope="col">Alamat</th>
             <th scope="col">Kurir</th>
             <th scope="col">No Kendaraan</th>
+            <th scope="col">Biaya Kirim</th>
             <th scope="col">Penerima</th>
             <th scope="col">Keterangan</th>
             <th scope="col">Status</th>
@@ -57,15 +56,14 @@ if ($this->session->flashdata('alert')) {
 
             foreach ($data->result() as $dt) {
                 echo '<tr>';
-                echo '<td rowspan="' . $dt->row . '">' . $i++ . '</td>';
                 echo '<td rowspan="' . $dt->row . '">' . $dt->id_pengiriman . '</td>';
-                echo '<td rowspan="' . $dt->row . '">' . $dt->id_penjualan . '</td>';
-                echo '<td>' . $dt->date . '</td>';
-                echo '<td>' . $dt->customer . '</td>';
+                echo '<td rowspan="' . $dt->row . '">' . $dt->date . '</td>';
+                echo '<td>' . $dt->nama . '</td>';
                 echo '<td>' . $dt->phone . '</td>';
                 echo '<td>' . $dt->alamat . '</td>';
                 echo '<td>' . $dt->kurir . '</td>';
                 echo '<td>' . $dt->no_kendaraan . '</td>';
+                echo '<td>' . $dt->ongkir . '</td>';
                 echo '<td>' . $dt->penerima . '</td>';
                 echo '<td>' . $dt->keterangan . '</td>';
                 echo '<td>' . $dt->status . '</td>';
