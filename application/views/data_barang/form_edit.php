@@ -61,6 +61,22 @@
     </div>
 
     <div class="form-group row">
+        <label for="jenis" class="col-sm-3 col-form-label">Jenis Produk</label>
+        <div class="col-sm-6">
+            <select class="custom-select custom-select-sm <?= (form_error('jenis')) ? 'is-invalid' : ''; ?>" id="jenis" name="jenis">
+                <option value="<?= $barang->jenis; ?>" selected><?= $barang->jenis; ?></option>
+                <?php foreach ($data->result() as $d) : ?>
+                    <option value="<?= $d->jenis; ?>"><?= $d->jenis; ?></option>
+                <?php endforeach; ?>
+                <!-- <option value="pelanggan">Pelanggan Biasa</option> -->
+            </select>
+            <div class="invalid-feedback">
+                <?= form_error('jenis', '<p class="error-message">', '</p>'); ?>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
         <label for="status" class="col-sm-3 col-form-label">Status</label>
         <?php
         $status = (set_value('status')) ? set_value('status') : $barang->active;

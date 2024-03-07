@@ -91,6 +91,16 @@ class Data_barang extends CI_Controller
                 )
             );
 
+            $this->form_validation->set_rules(
+                'jenis',
+                'Jenis Produk',
+                'required|min_length[2]',
+                array(
+                    'required' => '{field} wajib diisi',
+                    'min_length' => '{field} minimal 2 karakter'
+                )
+            );
+
             //jika data sudah valid maka lakukan proses penyimpanan
             if ($this->form_validation->run() == TRUE) {
                 //masukkan data ke variable array
@@ -99,7 +109,8 @@ class Data_barang extends CI_Controller
                     'nama_barang' => $this->security->xss_clean($this->input->post('nama_barang', TRUE)),
                     'brand' => $this->security->xss_clean($this->input->post('brand', TRUE)),
                     'stok' => $this->security->xss_clean($this->input->post('stok', TRUE)),
-                    'harga' => str_replace('.', '', $this->security->xss_clean($this->input->post('harga', TRUE)))
+                    'harga' => str_replace('.', '', $this->security->xss_clean($this->input->post('harga', TRUE))),
+                    'jenis' => $this->security->xss_clean($this->input->post('jenis', TRUE))
                 );
 
                 //simpan ke database
@@ -208,6 +219,16 @@ class Data_barang extends CI_Controller
             );
 
             $this->form_validation->set_rules(
+                'jenis',
+                'Jenis Produk',
+                'required|min_length[2]',
+                array(
+                    'required' => '{field} wajib diisi',
+                    'min_length' => '{field} minimal 2 karakter'
+                )
+            );
+
+            $this->form_validation->set_rules(
                 'status',
                 'Status',
                 "required|min_length[1]|max_length[1]|regex_match[/^[YN]+$/]",
@@ -227,6 +248,7 @@ class Data_barang extends CI_Controller
                     'brand' => $this->security->xss_clean($this->input->post('brand', TRUE)),
                     'stok' => $this->security->xss_clean($this->input->post('stok', TRUE)),
                     'harga' => str_replace('.', '', $this->security->xss_clean($this->input->post('harga', TRUE))),
+                    'jenis' => $this->security->xss_clean($this->input->post('jenis', TRUE)),
                     'active' => $this->security->xss_clean($this->input->post('status', TRUE))
                 );
 
@@ -243,7 +265,8 @@ class Data_barang extends CI_Controller
 
         $data = [
             'title' => 'Edit Data Barang',
-            'barang' => $barang->row()
+            'barang' => $barang->row(),
+            'data' => $this->m_barang->getAllData('tbl_barang')
         ];
 
         $this->template->kasir('data_barang/form_edit', $data);
@@ -285,6 +308,7 @@ class Data_barang extends CI_Controller
                 $row[] = $i->stok;
                 $row[] = '<span class="float-left">Rp.</span><span class="float-right">' . number_format($i->harga, 0, ',', '.') . ',-</span>';
                 $row[] = ($i->active == 'Y') ? 'Aktif' : 'Tidak Aktif';
+                $row[] = $i->jenis;
                 $row[] = '<a href="' . site_url('edit_barang/' . $i->kode_barang) . '" class="btn btn-warning btn-sm text-white">Edit</a>';
 
                 $data[] = $row;
