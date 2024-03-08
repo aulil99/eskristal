@@ -58,20 +58,27 @@
             </div>
         </div>
     </div>
-    
+
+
     <div class="form-group row">
         <label for="jenis" class="col-sm-3 col-form-label">Jenis Produk</label>
         <div class="col-sm-6">
             <select class="custom-select custom-select-sm <?= (form_error('jenis')) ? 'is-invalid' : ''; ?>" id="jenis" name="jenis">
                 <option value="" disabled>Pilih Jenis Produk</option>
-                <option value="agen">Agen</option>
-                <option value="pelanggan">Pelanggan Biasa</option>
+                <?php if ($this->session->userdata('level') == 'agen') :
+                ?>
+                    <option value="pelanggan">Pelanggan Biasa</option>
+                <?php else : ?>
+                    <option value="agen">Agen</option>
+                    <option value="pelanggan">Pelanggan Biasa</option>
+                <?php endif; ?>
             </select>
             <div class="invalid-feedback">
                 <?= form_error('jenis', '<p class="error-message">', '</p>'); ?>
             </div>
         </div>
     </div>
+
 
     <div class="form-group row">
         <div class="col-sm-9 offset-md-3">

@@ -52,10 +52,15 @@
     <div class="form-group row">
         <label for="jenis" class="col-sm-2 col-form-label">Jenis Pelanggan</label>
         <div class="col-sm-6">
-            <select class="form-control form-control-sm <?= (form_error('jenis')) ? 'is-invalid' : ''; ?>" id="jenis" name="jenis" placeholder="jenis" id="jenis" style="text-transform: capitalize;">
-                <option selected value="<?= (set_value('jenis')) ? set_value('jenis') : ''; ?>"><?= (set_value('jenis')) ? set_value('jenis') : ''; ?></option>
-                <option value="agen">Agen</option>
-                <option value="pelanggan">Pelanggan Biasa</option>
+            <select class="custom-select custom-select-sm <?= (form_error('jenis')) ? 'is-invalid' : ''; ?>" id="jenis" name="jenis">
+                <option value="" disabled>Pilih Jenis Produk</option>
+                <?php if ($this->session->userdata('level') == 'agen') :
+                ?>
+                    <option value="pelanggan">Pelanggan Biasa</option>
+                <?php else : ?>
+                    <option value="agen">Agen</option>
+                    <option value="pelanggan">Pelanggan Biasa</option>
+                <?php endif; ?>
             </select>
             <div class="invalid-feedback">
                 <?= form_error('jenis', '<p class="error-message">', '</p>'); ?>

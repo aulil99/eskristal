@@ -44,6 +44,37 @@
             ?>
 
             <?php
+            //tampilkan menu di bawah ini jika yang login admin
+            if ($this->session->userdata('level') == 'agen') :
+            ?>
+                <li <?= (in_array(strtolower($this->uri->segment(1)), ['barang', 'tambah_barang', 'edit_barang'])) ? 'class="active"' : ''; ?>>
+                    <a href="<?= site_url('barang'); ?>"><i class="fa fa-cubes"></i> Data Barang</a>
+                </li>
+
+                <li <?= (in_array(strtolower($this->uri->segment(1)), ['pelanggan', 'tambah_pelanggan', 'edit_pelanggan'])) ? 'class="active"' : ''; ?>>
+                    <a href="<?= site_url('pelanggan'); ?>"><i class="fa fa-users"></i> Data Pelanggan</a>
+                </li>
+
+                <li <?= (in_array(strtolower($this->uri->segment(1)), ['data_penjualan', 'tambah_penjualan', 'edit_penjualan'])) ? 'class="active"' : ''; ?>>
+                    <a href="<?= site_url('data_penjualan'); ?>"><i class="fa fa-reply"></i> Data Penjualan</a>
+                </li>
+
+                <li <?= (in_array(strtolower($this->uri->segment(1)), ['pengiriman', 'tambah_pengiriman', 'edit_pengiriman'])) ? 'class="active"' : ''; ?>>
+                    <a href="<?= site_url('pengiriman'); ?>">
+                        <i class="fa fa-truck"></i> Pengiriman
+                    </a>
+                </li>
+
+                <li <?= (in_array(strtolower($this->uri->segment(1)), ['laporan_pengiriman'])) ? 'class="active"' : ''; ?>>
+                    <a href="<?= site_url('laporan_pengiriman'); ?>">
+                        <i class="fa fa-file-text-o"></i>Laporan Pengiriman
+                    </a>
+                </li>
+            <?php
+            endif;
+            ?>
+
+            <?php
             //tampilkan menu di bawah ini jika yang login pegawai
             if ($this->session->userdata('level') == 'pegawai') :
             ?>
