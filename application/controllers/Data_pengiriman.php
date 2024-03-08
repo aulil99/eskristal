@@ -105,6 +105,13 @@ class Data_pengiriman extends CI_Controller
     public function tambah_pengiriman()
     {
         $this->is_login();
+
+        $uuid = null;
+        if ($this->session->userdata('level') == 'pegawai') {
+            $uuid = '1';
+        } else {
+            $uuid = $this->session->userdata('UserID');
+        }
         //ketika user mengklik submit
         if ($this->input->post('submit', TRUE) == 'submit') {
             //validasi form
@@ -181,7 +188,7 @@ class Data_pengiriman extends CI_Controller
                     // 'ongkir' => $ongkir->harga,
                     'kurir' => $kurir,
                     'no_kendaraan' => $plat,
-                    'user_id' => $this->session->userdata('UserID')
+                    'user_id' => $uuid
                 ];
 
                 $simpan = $this->m_pengiriman->save('tbl_pengiriman', $data_simpan);
@@ -196,8 +203,8 @@ class Data_pengiriman extends CI_Controller
 
         $data = [
             'title' => 'Tambah Pengiriman',
-            'data' => $this->m_penjualan->getData('tbl_penjualan', ['id_user' => $this->session->userdata('UserID')]),
-            'pelanggan' => $this->m_pelanggan->getData('tbl_pelanggan', ['user_id' => $this->session->userdata('UserID')])
+            'data' => $this->m_penjualan->getData('tbl_penjualan', ['id_user' => $uuid]),
+            'pelanggan' => $this->m_pelanggan->getData('tbl_pelanggan', ['user_id' => $uuid])
         ];
 
         $this->template->kasir('pengiriman/form_input', $data);
@@ -206,6 +213,13 @@ class Data_pengiriman extends CI_Controller
     public function edit_pengiriman($id)
     {
         $this->is_login();
+
+        $uuid = null;
+        if ($this->session->userdata('level') == 'pegawai') {
+            $uuid = '1';
+        } else {
+            $uuid = $this->session->userdata('UserID');
+        }
 
         //ketika user mengklik submit
         if ($this->input->post('submit', TRUE) == 'submit') {
@@ -336,7 +350,7 @@ class Data_pengiriman extends CI_Controller
                     'status' => $status,
                 ];
 
-                $up = $this->m_pengiriman->update('tbl_pengiriman', $data_update, ['id_pengiriman' => $idPengiriman, 'user_id' => $this->session->userdata('UserID')]);
+                $up = $this->m_pengiriman->update('tbl_pengiriman', $data_update, ['id_pengiriman' => $idPengiriman, 'user_id' => $uuid]);
 
                 if ($up) {
                     $this->session->set_flashdata('success', 'Data Pengiriman berhasil diperbarui..');
@@ -349,13 +363,13 @@ class Data_pengiriman extends CI_Controller
         //ambil data
         $where = [
             'id_pengiriman' => $this->security->xss_clean($id),
-            'user_id' => $this->session->userdata('UserID')
+            'user_id' => $uuid
         ];
         $getData = $this->m_pengiriman->getData('tbl_pengiriman', $where);
         $rowData = $getData->row();
         $idP = $rowData->id_penjualan;
 
-        $getPenjualan = $this->m_penjualan->getData('tbl_penjualan', ['id_penjualan' => $this->security->xss_clean($idP), 'id_user' => $this->session->userdata('UserID')]);
+        $getPenjualan = $this->m_penjualan->getData('tbl_penjualan', ['id_penjualan' => $this->security->xss_clean($idP), 'id_user' => $uuid]);
         //cek jumlah data
         if ($getData->num_rows() != 1) {
             redirect('pengiriman');
@@ -365,7 +379,7 @@ class Data_pengiriman extends CI_Controller
             'title' => 'Edit Pengiriman',
             'data' => $rowData,
             'pembeli' => $getPenjualan->row(),
-            'penjualan' => $this->m_penjualan->getData('tbl_penjualan', ['id_user' => $this->session->userdata('UserID')])
+            'penjualan' => $this->m_penjualan->getData('tbl_penjualan', ['id_user' => $uuid])
         ];
 
         $this->template->kasir('pengiriman/form_edit', $data);
@@ -375,6 +389,14 @@ class Data_pengiriman extends CI_Controller
     {
         //cek login
         $this->is_login();
+
+        $uuid = null;
+        if ($this->session->userdata('level') == 'pegawai') {
+            $uuid = '1';
+        } else {
+            $uuid = $this->session->userdata('UserID');
+        }
+        
         //validasi request ajax
         if ($this->input->is_ajax_request()) {
             //validasi
@@ -392,7 +414,7 @@ class Data_pengiriman extends CI_Controller
                 //tangkap row id
                 $id = $this->security->xss_clean($this->input->post('id_pengiriman', TRUE));
 
-                $hapus = $this->m_pengiriman->delete('tbl_pengiriman', ['id_pengiriman' => $id, 'user_id' => $this->session->userdata('UserID')]);
+                $hapus = $this->m_pengiriman->delete('tbl_pengiriman', ['id_pengiriman' => $id, 'user_id' => $uuid]);
 
                 if ($hapus) {
                     echo json_encode(['message' => 'success']);
@@ -414,7 +436,11 @@ class Data_pengiriman extends CI_Controller
         if ($this->input->is_ajax_request()) {
             //ambil list data
             $uuid = $this->session->userdata('UserID');
-            $list = $this->m_pengiriman->get_datatables(['a.user_id' => $uuid]);
+            if ($this->session->userdata('level') == 'pegawai') {
+                $list = $this->m_pengiriman->get_datatables(['a.user_id' => '1']);
+            } else {
+                $list = $this->m_pengiriman->get_datatables(['a.user_id' => $uuid]);
+            }
             //siapkan variabel array
             $data = array();
             $no = $_POST['start'];

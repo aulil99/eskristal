@@ -146,7 +146,13 @@ class Laporan extends CI_Controller
 
         $strDate = date('Y-m-d', strtotime(str_replace('/', '-', $tanggal)));
         $uuid = $this->session->userdata("UserID");
-        $getData = $this->m_laporan->getDataStokHarian($strDate, ['b.user_id' => $uuid]);
+        $getData = null;
+
+        if ($this->session->userdata('level') == 'pegawai') {
+            $getData = $this->m_laporan->getDataStokHarian($strDate, ['b.user_id' => '1']);
+        } else {
+            $getData = $this->m_laporan->getDataStokHarian($strDate, ['b.user_id' => $uuid]);
+        }
 
         $data = [
             'title' => 'Laporan Harian Stok Barang',
@@ -166,7 +172,13 @@ class Laporan extends CI_Controller
         }
 
         $uuid = $this->session->userdata("UserID");
-        $getData = $this->m_laporan->getDataStokHarian($date, ['b.user_id' => $uuid]);
+        $getData = null;
+
+        if ($this->session->userdata('level') == 'pegawai') {
+            $getData = $this->m_laporan->getDataStokHarian($date, ['b.user_id' => '1']);
+        } else {
+            $getData = $this->m_laporan->getDataStokHarian($date, ['b.user_id' => $uuid]);
+        }
 
         $data = [
             'title' => 'Laporan Harian Stok Barang',
@@ -221,7 +233,13 @@ class Laporan extends CI_Controller
         }
 
         $uuid = $this->session->userdata("UserID");
-        $getData = $this->m_laporan->getDataStokBulanan($this->convert_bulan($bulan), $tahun, ['b.user_id' => $uuid]);
+        $getData = null;
+
+        if ($this->session->userdata('level') == 'pegawai') {
+            $getData = $this->m_laporan->getDataStokBulanan($this->convert_bulan($bulan), $tahun, ['b.user_id' => '1']);
+        } else {
+            $getData = $this->m_laporan->getDataStokBulanan($this->convert_bulan($bulan), $tahun, ['b.user_id' => $uuid]);
+        }
 
         $data = [
             'title' => 'Laporan Bulanan Stok Barang',
@@ -248,7 +266,14 @@ class Laporan extends CI_Controller
         }
 
         $uuid = $this->session->userdata("UserID");
-        $getData = $this->m_laporan->getDataStokBulanan($this->convert_bulan($exp[0]), $exp[1], ['b.user_id' => $uuid]);
+        $getData = null;
+
+        if ($this->session->userdata('level') == 'pegawai') {
+            $getData = $this->m_laporan->getDataStokBulanan($this->convert_bulan($exp[0]), $exp[1], ['b.user_id' => '1']);
+        } else {
+            $getData = $this->m_laporan->getDataStokBulanan($this->convert_bulan($exp[0]), $exp[1], ['b.user_id' => $uuid]);
+        }
+
 
         $data = [
             'title' => 'Laporan Bulanan Stok Barang',
@@ -292,7 +317,13 @@ class Laporan extends CI_Controller
         }
 
         $uuid = $this->session->userdata('UserID');
-        $getData = $this->m_laporan->getDataStokTahunan($tahun, ['b.user_id' => $uuid]);
+        $getData = null;
+
+        if ($this->session->userdata('level') == 'pegawai') {
+            $getData = $this->m_laporan->getDataStokTahunan($tahun, ['b.user_id' => '1']);
+        } else {
+            $getData = $this->m_laporan->getDataStokTahunan($tahun, ['b.user_id' => $uuid]);
+        }
 
         $data = [
             'title' => 'Laporan Tahunan Stok Barang',
@@ -312,7 +343,12 @@ class Laporan extends CI_Controller
         }
 
         $uuid = $this->session->userdata('UserID');
-        $getData = $this->m_laporan->getDataStokTahunan($tahun, ['b.user_id' => $uuid]);
+        $getData = null;
+        if ($this->session->userdata('level') == 'pegawai') {
+            $getData = $this->m_laporan->getDataStokTahunan($tahun, ['b.user_id' => '1']);
+        } else {
+            $getData = $this->m_laporan->getDataStokTahunan($tahun, ['b.user_id' => $uuid]);
+        }
 
         $data = [
             'title' => 'Laporan Tahunan Stok Barang',
@@ -492,7 +528,14 @@ class Laporan extends CI_Controller
 
         $uuid = $this->session->userdata('UserID');
         $strDate = date('Y-m-d', strtotime(str_replace('/', '-', $tanggal)));
-        $getData = $this->m_laporan->getDataPenjualanHarian($strDate, $uuid);
+        $getData = null;
+
+        if ($this->session->userdata('level') == 'pegawai') {
+            $getData = $this->m_laporan->getDataPenjualanHarian($strDate, '1');
+        } else {
+            $getData = $this->m_laporan->getDataPenjualanHarian($strDate, $uuid);
+        }
+
         $getOngkir = $this->m_ongkir->getAllData('tbl_ongkir');
 
         $data = [
@@ -514,7 +557,14 @@ class Laporan extends CI_Controller
         }
 
         $uuid = $this->session->userdata('UserID');
-        $getData = $this->m_laporan->getDataPenjualanHarian($date, $uuid);
+        $getData = null;
+
+        if ($this->session->userdata('level') == 'pegawai') {
+            $getData = $this->m_laporan->getDataPenjualanHarian($date, '1');
+        } else {
+            $getData = $this->m_laporan->getDataPenjualanHarian($date, $uuid);
+        }
+
         $getOngkir = $this->m_ongkir->getAllData('tbl_ongkir');
 
         $data = [
@@ -571,7 +621,14 @@ class Laporan extends CI_Controller
         }
 
         $uuid = $this->session->userdata('UserID');
-        $getData = $this->m_laporan->getDataPenjualanBulanan($this->convert_bulan($bulan), $tahun, $uuid);
+        $getData = null;
+
+        if ($this->session->userdata('level') == 'pegawai') {
+            $getData = $this->m_laporan->getDataPenjualanBulanan($this->convert_bulan($bulan), $tahun, '1');
+        } else {
+            $getData = $this->m_laporan->getDataPenjualanBulanan($this->convert_bulan($bulan), $tahun, $uuid);
+        }
+
         $getOngkir = $this->m_ongkir->getAllData('tbl_ongkir');
 
         $data = [
@@ -600,7 +657,13 @@ class Laporan extends CI_Controller
         }
 
         $uuid = $this->session->userdata('UserID');
-        $getData = $this->m_laporan->getDataPenjualanBulanan($this->convert_bulan($exp[0]), $exp[1], $uuid);
+        $getData = null;
+        if ($this->session->userdata('level') == 'pegawai') {
+            $getData = $this->m_laporan->getDataPenjualanBulanan($this->convert_bulan($exp[0]), $exp[1], '1');
+        } else {
+            $getData = $this->m_laporan->getDataPenjualanBulanan($this->convert_bulan($exp[0]), $exp[1], $uuid);
+        }
+        
         $getOngkir = $this->m_ongkir->getAllData('tbl_ongkir');
 
         $data = [
