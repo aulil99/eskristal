@@ -110,7 +110,8 @@ class Data_barang extends CI_Controller
                     'brand' => $this->security->xss_clean($this->input->post('brand', TRUE)),
                     'stok' => $this->security->xss_clean($this->input->post('stok', TRUE)),
                     'harga' => str_replace('.', '', $this->security->xss_clean($this->input->post('harga', TRUE))),
-                    'jenis' => $this->security->xss_clean($this->input->post('jenis', TRUE))
+                    'jenis' => $this->security->xss_clean($this->input->post('jenis', TRUE)),
+                    'user_id' => $this->session->userdata('UserID')
                 );
 
                 //simpan ke database
@@ -146,7 +147,7 @@ class Data_barang extends CI_Controller
         }
 
         //ambil data barang
-        $barang = $this->m_barang->getData('tbl_barang', ['kode_barang' => $kode_barang]);
+        $barang = $this->m_barang->getData('tbl_barang', ['kode_barang' => $kode_barang, 'user_id' => $this->session->userdata('UserID')]);
 
         //validasi jumlah data
         if ($barang->num_rows() !== 1) {
@@ -253,7 +254,7 @@ class Data_barang extends CI_Controller
                 );
 
                 //simpan ke database
-                $up = $this->m_barang->update('tbl_barang', $update, ['kode_barang' => $this->security->xss_clean($this->input->post('ID', TRUE))]);
+                $up = $this->m_barang->update('tbl_barang', $update, ['kode_barang' => $this->security->xss_clean($this->input->post('ID', TRUE)), 'user_id' => $this->session->userdata('UserID')]);
 
                 if ($up) {
                     $this->session->set_flashdata('success', 'Data Barang berhasil diperbarui...');
@@ -266,7 +267,7 @@ class Data_barang extends CI_Controller
         $data = [
             'title' => 'Edit Data Barang',
             'barang' => $barang->row(),
-            'data' => $this->m_barang->getAllData('tbl_barang')
+            'data' => $this->m_barang->getData('tbl_barang', ['user_id' => $this->session->userdata('UserID')])
         ];
 
         $this->template->kasir('data_barang/form_edit', $data);
@@ -292,7 +293,8 @@ class Data_barang extends CI_Controller
         //cek apakah request berupa ajax atau bukan, jika bukan maka redirect ke home
         if ($this->input->is_ajax_request()) {
             //ambil list data
-            $list = $this->m_barang->get_datatables();
+            $uuid = ['user_id' => $this->session->userdata('UserID')];
+            $list = $this->m_barang->get_datatables($uuid);
             //siapkan variabel array
             $data = array();
             $no = $_POST['start'];
@@ -336,7 +338,8 @@ class Data_barang extends CI_Controller
         //cek apakah request berupa ajax atau bukan, jika bukan maka redirect ke home
         if ($this->input->is_ajax_request()) {
             //ambil list data
-            $list = $this->m_barang->get_datatables();
+            $uuid = ['user_id' => $this->session->userdata('UserID')];
+            $list = $this->m_barang->get_datatables($uuid);
             //siapkan variabel array
             $data = array();
             $no = $_POST['start'];

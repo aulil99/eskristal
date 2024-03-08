@@ -180,7 +180,8 @@ class Data_pengiriman extends CI_Controller
                     'date' => $tgl,
                     // 'ongkir' => $ongkir->harga,
                     'kurir' => $kurir,
-                    'no_kendaraan' => $plat
+                    'no_kendaraan' => $plat,
+                    'user_id' => $this->session->userdata('UserID')
                 ];
 
                 $simpan = $this->m_pengiriman->save('tbl_pengiriman', $data_simpan);
@@ -195,8 +196,8 @@ class Data_pengiriman extends CI_Controller
 
         $data = [
             'title' => 'Tambah Pengiriman',
-            'data' => $this->m_penjualan->getAllData('tbl_penjualan'),
-            'pelanggan' => $this->m_pelanggan->getAllData('tbl_pelanggan')
+            'data' => $this->m_penjualan->getData('tbl_penjualan', ['id_user' => $this->session->userdata('UserID')]),
+            'pelanggan' => $this->m_pelanggan->getData('tbl_pelanggan', ['user_id' => $this->session->userdata('UserID')])
         ];
 
         $this->template->kasir('pengiriman/form_input', $data);
@@ -335,7 +336,7 @@ class Data_pengiriman extends CI_Controller
                     'status' => $status,
                 ];
 
-                $up = $this->m_pengiriman->update('tbl_pengiriman', $data_update, ['id_pengiriman' => $idPengiriman]);
+                $up = $this->m_pengiriman->update('tbl_pengiriman', $data_update, ['id_pengiriman' => $idPengiriman, 'user_id' => $this->session->userdata('UserID')]);
 
                 if ($up) {
                     $this->session->set_flashdata('success', 'Data Pengiriman berhasil diperbarui..');
@@ -347,13 +348,14 @@ class Data_pengiriman extends CI_Controller
 
         //ambil data
         $where = [
-            'id_pengiriman' => $this->security->xss_clean($id)
+            'id_pengiriman' => $this->security->xss_clean($id),
+            'user_id' => $this->session->userdata('UserID')
         ];
         $getData = $this->m_pengiriman->getData('tbl_pengiriman', $where);
         $rowData = $getData->row();
         $idP = $rowData->id_penjualan;
 
-        $getPenjualan = $this->m_penjualan->getData('tbl_penjualan', ['id_penjualan' => $this->security->xss_clean($idP)]);
+        $getPenjualan = $this->m_penjualan->getData('tbl_penjualan', ['id_penjualan' => $this->security->xss_clean($idP), 'id_user' => $this->session->userdata('UserID')]);
         //cek jumlah data
         if ($getData->num_rows() != 1) {
             redirect('pengiriman');
@@ -363,7 +365,7 @@ class Data_pengiriman extends CI_Controller
             'title' => 'Edit Pengiriman',
             'data' => $rowData,
             'pembeli' => $getPenjualan->row(),
-            'penjualan' => $this->m_penjualan->getAllData('tbl_penjualan')
+            'penjualan' => $this->m_penjualan->getData('tbl_penjualan', ['id_user' => $this->session->userdata('UserID')])
         ];
 
         $this->template->kasir('pengiriman/form_edit', $data);
@@ -390,7 +392,7 @@ class Data_pengiriman extends CI_Controller
                 //tangkap row id
                 $id = $this->security->xss_clean($this->input->post('id_pengiriman', TRUE));
 
-                $hapus = $this->m_pengiriman->delete('tbl_pengiriman', ['id_pengiriman' => $id]);
+                $hapus = $this->m_pengiriman->delete('tbl_pengiriman', ['id_pengiriman' => $id, 'user_id' => $this->session->userdata('UserID')]);
 
                 if ($hapus) {
                     echo json_encode(['message' => 'success']);
@@ -411,7 +413,8 @@ class Data_pengiriman extends CI_Controller
         //cek apakah request berupa ajax atau bukan, jika bukan maka redirect ke home
         if ($this->input->is_ajax_request()) {
             //ambil list data
-            $list = $this->m_pengiriman->get_datatables();
+            $uuid = $this->session->userdata('UserID');
+            $list = $this->m_pengiriman->get_datatables(['a.user_id' => $uuid]);
             //siapkan variabel array
             $data = array();
             $no = $_POST['start'];

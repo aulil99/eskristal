@@ -102,8 +102,8 @@ class Penjualan extends CI_Controller
             }
         }
 
-        $pelanggan = $this->m_pelanggan->getAllData('tbl_pelanggan');
-        $barang = $this->m_penjualan->getData('tbl_barang', ['active' => 'Y']);
+        $pelanggan = $this->m_pelanggan->getData('tbl_pelanggan', ['user_id' => $this->session->userdata('UserID')]);
+        $barang = $this->m_penjualan->getData('tbl_barang', ['active' => 'Y', 'user_id' => $this->session->userdata('UserID')]);
 
         $data = [
             'title' => 'Tambah Data penjualan Barang',
@@ -158,7 +158,7 @@ class Penjualan extends CI_Controller
                 //tangkap id
                 $id = $this->security->xss_clean($this->input->post('id', TRUE));
 
-                $hapus = $this->m_penjualan->delete(['tbl_penjualan', 'tbl_detail_penjualan'], ['id_penjualan' => $id]);
+                $hapus = $this->m_penjualan->delete(['tbl_penjualan', 'tbl_detail_penjualan'], ['id_penjualan' => $id, 'id_user' => $this->session->userdata('UserID')]);
 
                 if ($hapus) {
                     echo json_encode(['message' => 'success']);
@@ -250,7 +250,7 @@ class Penjualan extends CI_Controller
                 }
 
                 //simpan perubahan data penjualan
-                $update = $this->m_penjualan->update('tbl_penjualan', $data_penjualan, ['id_penjualan' => $idP]);
+                $update = $this->m_penjualan->update('tbl_penjualan', $data_penjualan, ['id_penjualan' => $idP, 'id_user' => $this->session->userdata('UserID')]);
 
                 if ($update) {
                     //hapus detail penjualan
@@ -303,8 +303,8 @@ class Penjualan extends CI_Controller
         $data = [
             'title' => 'Edit Data Penjualan',
             'fdata' => $fData,
-            'data' => $this->m_penjualan->getData('tbl_barang', ['active' => 'Y']),
-            'pelanggan' => $this->m_pelanggan->getAllData('tbl_pelanggan'),
+            'data' => $this->m_penjualan->getData('tbl_barang', ['active' => 'Y', 'user_id' => $this->session->userdata('UserID')]),
+            'pelanggan' => $this->m_pelanggan->getData('tbl_pelanggan', ['user_id' => $this->session->userdata('UserID')]),
             'table' => $this->read_cart()
         ];
 
@@ -331,7 +331,9 @@ class Penjualan extends CI_Controller
             if ($this->form_validation->run() == TRUE) {
                 //ambil data
                 $where = [
-                    'kode_barang' => $this->security->xss_clean($this->input->post('id', TRUE)), 'active' => 'Y'
+                    'kode_barang' => $this->security->xss_clean($this->input->post('id', TRUE)),
+                    'active' => 'Y',
+                    'user_id' => $this->session->userdata('UserID')
                 ];
                 $getBarang = $this->m_penjualan->getData('tbl_barang', $where);
                 //cek jumlah data
@@ -404,7 +406,8 @@ class Penjualan extends CI_Controller
             if ($this->form_validation->run() == TRUE) {
                 //ambil barang sesuai kode
                 $where = [
-                    'kode_barang' => $this->security->xss_clean($this->input->post('id', TRUE)), 'active' => 'Y'
+                    'kode_barang' => $this->security->xss_clean($this->input->post('id', TRUE)), 'active' => 'Y',
+                    'user_id' => $this->session->userdata('UserID')
                 ];
 
                 $get_barang = $this->m_penjualan->getData('tbl_barang', $where);
@@ -524,7 +527,7 @@ class Penjualan extends CI_Controller
 
             if ($get_item) {
                 //cek item dalam database untuk mengambil stok terakhir dan ditambah stok barang yang akan dijual
-                $getBarang = $this->m_penjualan->getData('tbl_barang', ['kode_barang' => $get_item['id']]);
+                $getBarang = $this->m_penjualan->getData('tbl_barang', ['kode_barang' => $get_item['id'], 'user_id' => $this->session->userdata('UserID')]);
 
                 if ($getBarang->num_rows() != 1) {
                     $arr = [
@@ -622,7 +625,8 @@ class Penjualan extends CI_Controller
 
                 //ambil barang sesuai kode
                 $where = [
-                    'kode_barang' => $this->security->xss_clean($this->input->post('id', TRUE))
+                    'kode_barang' => $this->security->xss_clean($this->input->post('id', TRUE)),
+                    'user_id' => $this->session->userdata('UserID')
                 ];
 
                 $get_barang = $this->m_penjualan->getData('tbl_barang', $where);
@@ -703,7 +707,8 @@ class Penjualan extends CI_Controller
         //cek apakah request berupa ajax atau bukan, jika bukan maka redirect ke home
         if ($this->input->is_ajax_request()) {
             //ambil list data
-            $list = $this->m_penjualan->get_datatables();
+            $where = ['p.id_user' => $this->session->userdata('UserID')];
+            $list = $this->m_penjualan->get_datatables($where);
             //siapkan variabel array
             $data = array();
             $no = $_POST['start'];

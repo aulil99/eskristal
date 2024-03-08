@@ -76,9 +76,10 @@ class M_barang extends CI_Model
         }
     }
 
-    function get_datatables()
+    function get_datatables($where = null)
     {
         $this->_get_datatables_query();
+        $this->db->where($where);
 
         if ($_POST['length'] != -1) {
             $this->db->limit($_POST['length'], $_POST['start']);

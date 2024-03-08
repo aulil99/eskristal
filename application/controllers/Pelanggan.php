@@ -127,7 +127,8 @@ class Pelanggan extends CI_Controller
                     'alamat' => $alamat,
                     'fasilitas' => $fasilitas,
                     'jenis' => $jenis,
-                    'status' => $status
+                    'status' => $status,
+                    'user_id' => $this->session->userdata('UserID')
                 ];
 
                 $simpan = $this->m_pelanggan->save('tbl_pelanggan', $data_simpan);
@@ -249,6 +250,7 @@ class Pelanggan extends CI_Controller
                 $fasilitas = $this->security->xss_clean($this->input->post('fasilitas', TRUE));
                 $jenis = $this->security->xss_clean($this->input->post('jenis', TRUE));
                 $status = $this->security->xss_clean($this->input->post('status', TRUE));
+                $uuid = $this->session->userdata('UserID');
 
                 $data_update = [
                     'id_pelanggan' => $id,
@@ -260,7 +262,7 @@ class Pelanggan extends CI_Controller
                     'status' => $status
                 ];
 
-                $up = $this->m_pelanggan->update('tbl_pelanggan', $data_update, ['id_pelanggan' => $idPelanggan]);
+                $up = $this->m_pelanggan->update('tbl_pelanggan', $data_update, ['id_pelanggan' => $idPelanggan, 'user_id' => $uuid]);
 
                 if ($up) {
                     $this->session->set_flashdata('success', 'Data Pelanggan berhasil diperbarui..');
@@ -272,7 +274,8 @@ class Pelanggan extends CI_Controller
 
         //ambil data
         $where = [
-            'id_pelanggan' => $this->security->xss_clean($id)
+            'id_pelanggan' => $this->security->xss_clean($id),
+            'user_id' => $uuid
         ];
         $getData = $this->m_pelanggan->getData('tbl_pelanggan', $where);
 
@@ -295,7 +298,8 @@ class Pelanggan extends CI_Controller
         //cek apakah request berupa ajax atau bukan, jika bukan maka redirect ke home
         if ($this->input->is_ajax_request()) {
             //ambil list data
-            $list = $this->m_pelanggan->get_datatables();
+            $where = ['user_id' => $this->session->userdata('UserID')];
+            $list = $this->m_pelanggan->get_datatables($where);
             //siapkan variabel array
             $data = array();
             $no = $_POST['start'];
@@ -352,8 +356,9 @@ class Pelanggan extends CI_Controller
             if ($this->form_validation->run() == TRUE) {
                 //tangkap row id
                 $id = $this->security->xss_clean($this->input->post('id_pelanggan', TRUE));
+                $uuid = $this->session->userdata('UserID');
 
-                $hapus = $this->m_pelanggan->delete('tbl_pelanggan', ['id_pelanggan' => $id]);
+                $hapus = $this->m_pelanggan->delete('tbl_pelanggan', ['id_pelanggan' => $id, 'user_id' => $uuid]);
 
                 if ($hapus) {
                     echo json_encode(['message' => 'success']);
