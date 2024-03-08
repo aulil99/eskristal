@@ -53,7 +53,10 @@ class Laporan extends CI_Controller
             $tanggal = date('d/m/Y');
         }
 
-        $getData = $this->m_laporan->getDataPengiriman(date('Y-m-d', strtotime(str_replace('/', '-', $tanggal))));
+        $strDate = date('Y-m-d', strtotime(str_replace('/', '-', $tanggal)));
+        $uuid = $this->session->userdata("UserID");
+
+        $getData = $this->m_laporan->getDataPengiriman(['date' => $strDate, 'a.user_id' => $uuid]);
 
         $data = [
             'title' => 'Laporan Harian Pengiriman Barang',
@@ -72,7 +75,9 @@ class Laporan extends CI_Controller
             redirect('laporan_pengiriman');
         }
 
-        $getData = $this->m_laporan->getDataPengiriman($date);
+        $uuid = $this->session->userdata("UserID");
+
+        $getData = $this->m_laporan->getDataPengiriman(['date' => $date, 'a.user_id' => $uuid]);
 
         $data = [
             'title' => 'Laporan Harian Stok Barang',
@@ -92,7 +97,7 @@ class Laporan extends CI_Controller
         ];
         $getDelivery = $this->m_pengiriman->getData('tbl_pengiriman', $where);
         $rowData = $getDelivery->row();
-        
+
         //ambil data
         $getData = $this->m_penjualan->getDataPenjualan($this->security->xss_clean($rowData->id_penjualan));
         $getPelanggan = $this->m_pelanggan->getData('tbl_pelanggan', ['id_pelanggan' => $rowData->id_pelanggan]);
@@ -139,7 +144,9 @@ class Laporan extends CI_Controller
             $tanggal = date('d/m/Y');
         }
 
-        $getData = $this->m_laporan->getDataStokHarian(date('Y-m-d', strtotime(str_replace('/', '-', $tanggal))));
+        $strDate = date('Y-m-d', strtotime(str_replace('/', '-', $tanggal)));
+        $uuid = $this->session->userdata("UserID");
+        $getData = $this->m_laporan->getDataStokHarian($strDate, ['b.user_id' => $uuid]);
 
         $data = [
             'title' => 'Laporan Harian Stok Barang',
@@ -158,7 +165,8 @@ class Laporan extends CI_Controller
             redirect('stok_harian');
         }
 
-        $getData = $this->m_laporan->getDataStokHarian($date);
+        $uuid = $this->session->userdata("UserID");
+        $getData = $this->m_laporan->getDataStokHarian($date, ['b.user_id' => $uuid]);
 
         $data = [
             'title' => 'Laporan Harian Stok Barang',
@@ -212,7 +220,8 @@ class Laporan extends CI_Controller
             $tahun = date('Y');
         }
 
-        $getData = $this->m_laporan->getDataStokBulanan($this->convert_bulan($bulan), $tahun);
+        $uuid = $this->session->userdata("UserID");
+        $getData = $this->m_laporan->getDataStokBulanan($this->convert_bulan($bulan), $tahun, ['b.user_id' => $uuid]);
 
         $data = [
             'title' => 'Laporan Bulanan Stok Barang',
@@ -238,7 +247,8 @@ class Laporan extends CI_Controller
             redirect('stok_bulanan');
         }
 
-        $getData = $this->m_laporan->getDataStokBulanan($this->convert_bulan($exp[0]), $exp[1]);
+        $uuid = $this->session->userdata("UserID");
+        $getData = $this->m_laporan->getDataStokBulanan($this->convert_bulan($exp[0]), $exp[1], ['b.user_id' => $uuid]);
 
         $data = [
             'title' => 'Laporan Bulanan Stok Barang',
@@ -281,7 +291,8 @@ class Laporan extends CI_Controller
             $tahun = date('Y');
         }
 
-        $getData = $this->m_laporan->getDataStokTahunan($tahun);
+        $uuid = $this->session->userdata('UserID');
+        $getData = $this->m_laporan->getDataStokTahunan($tahun, ['b.user_id' => $uuid]);
 
         $data = [
             'title' => 'Laporan Tahunan Stok Barang',
@@ -300,7 +311,8 @@ class Laporan extends CI_Controller
             redirect('stok_tahunan');
         }
 
-        $getData = $this->m_laporan->getDataStokTahunan($tahun);
+        $uuid = $this->session->userdata('UserID');
+        $getData = $this->m_laporan->getDataStokTahunan($tahun, ['b.user_id' => $uuid]);
 
         $data = [
             'title' => 'Laporan Tahunan Stok Barang',
@@ -478,7 +490,9 @@ class Laporan extends CI_Controller
             $tanggal = date('d/m/Y');
         }
 
-        $getData = $this->m_laporan->getDataPenjualanHarian(date('Y-m-d', strtotime(str_replace('/', '-', $tanggal))));
+        $uuid = $this->session->userdata('UserID');
+        $strDate = date('Y-m-d', strtotime(str_replace('/', '-', $tanggal)));
+        $getData = $this->m_laporan->getDataPenjualanHarian($strDate, $uuid);
         $getOngkir = $this->m_ongkir->getAllData('tbl_ongkir');
 
         $data = [
@@ -499,7 +513,8 @@ class Laporan extends CI_Controller
             redirect('pembelian_harian');
         }
 
-        $getData = $this->m_laporan->getDataPenjualanHarian($date);
+        $uuid = $this->session->userdata('UserID');
+        $getData = $this->m_laporan->getDataPenjualanHarian($date, $uuid);
         $getOngkir = $this->m_ongkir->getAllData('tbl_ongkir');
 
         $data = [
@@ -555,7 +570,8 @@ class Laporan extends CI_Controller
             $tahun = date('Y');
         }
 
-        $getData = $this->m_laporan->getDataPenjualanBulanan($this->convert_bulan($bulan), $tahun);
+        $uuid = $this->session->userdata('UserID');
+        $getData = $this->m_laporan->getDataPenjualanBulanan($this->convert_bulan($bulan), $tahun, $uuid);
         $getOngkir = $this->m_ongkir->getAllData('tbl_ongkir');
 
         $data = [
@@ -583,7 +599,8 @@ class Laporan extends CI_Controller
             redirect('stok_bulanan');
         }
 
-        $getData = $this->m_laporan->getDataPenjualanBulanan($this->convert_bulan($exp[0]), $exp[1]);
+        $uuid = $this->session->userdata('UserID');
+        $getData = $this->m_laporan->getDataPenjualanBulanan($this->convert_bulan($exp[0]), $exp[1], $uuid);
         $getOngkir = $this->m_ongkir->getAllData('tbl_ongkir');
 
         $data = [

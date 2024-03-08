@@ -8,20 +8,20 @@ class M_laporan extends CI_Model
         parent::__construct();
     }
 
-    function getDataPengiriman($tanggal)
+    function getDataPengiriman($where = null)
     {
         $table = 'tbl_pengiriman';
         $select = "a.id_pengiriman as id_pengiriman, b.nama as nama, b.phone as phone, b.alamat as alamat, b.fasilitas as fasilitas, a.date as date, a.ongkir as ongkir, a.kurir as kurir, a.no_kendaraan as no_kendaraan, a.penerima as penerima, a.keterangan as keterangan, a.status as status";
         $joinTable = "tbl_pengiriman a LEFT JOIN tbl_pelanggan b ON(a.id_pelanggan = b.id_pelanggan)";
-        
+
         $this->db->select($select);
         $this->db->from($joinTable);
-        $this->db->where("date", $tanggal);
+        $this->db->where($where);
 
         return $this->db->get();
     }
 
-    function getDataStokHarian($tanggal)
+    function getDataStokHarian($tanggal, $where = null)
     {
         $table = 'tbl_barang b
                     LEFT JOIN
@@ -43,12 +43,13 @@ class M_laporan extends CI_Model
 
         $this->db->select($select);
         $this->db->from($table);
+        $this->db->where($where);
         $this->db->group_by($group);
 
         return $this->db->get();
     }
 
-    function getDataStokBulanan($bulan, $tahun)
+    function getDataStokBulanan($bulan, $tahun, $where = null)
     {
 
         $tanggal1 = $tahun . '-' . $bulan . '-01';
@@ -73,12 +74,13 @@ class M_laporan extends CI_Model
 
         $this->db->select($select);
         $this->db->from($table);
+        $this->db->where($where);
         $this->db->group_by($group);
 
         return $this->db->get();
     }
 
-    function getDataStokTahunan($tahun)
+    function getDataStokTahunan($tahun, $where = null)
     {
         $table = 'tbl_barang b
                     LEFT JOIN
@@ -100,6 +102,7 @@ class M_laporan extends CI_Model
 
         $this->db->select($select);
         $this->db->from($table);
+        $this->db->where($where);
         $this->db->group_by($group);
 
         return $this->db->get();
@@ -145,7 +148,7 @@ class M_laporan extends CI_Model
         return $this->db->get();
     }
 
-    function getDataPenjualanHarian($tanggal)
+    function getDataPenjualanHarian($tanggal, $uuid)
     {
         $select = 'p.id_penjualan AS id_penjualan, nama_barang, brand, dp.harga AS harga, qty, nama_pembeli, c.jenis AS jenis, (SELECT COUNT(*) FROM tbl_detail_penjualan WHERE id_penjualan = p.id_penjualan) AS row';
 
@@ -154,7 +157,7 @@ class M_laporan extends CI_Model
                     LEFT JOIN tbl_barang b ON(dp.id_barang = b.kode_barang)
                     LEFT JOIN tbl_pelanggan c ON(p.id_pelanggan = c.id_pelanggan)';
 
-        $where = ['p.tgl_penjualan' => $tanggal];
+        $where = ['p.tgl_penjualan' => $tanggal, 'p.id_user' => $uuid];
 
         $this->db->select($select);
         $this->db->from($table);
@@ -163,7 +166,7 @@ class M_laporan extends CI_Model
         return $this->db->get();
     }
 
-    function getDataPenjualanBulanan($bulan, $tahun)
+    function getDataPenjualanBulanan($bulan, $tahun, $uuid)
     {
         $tgl1 = $tahun . '-' . $bulan . '-01';
         $tgl2 = $tahun . '-' . $bulan . '-31';
@@ -175,7 +178,7 @@ class M_laporan extends CI_Model
                     LEFT JOIN tbl_barang b ON(dp.id_barang = b.kode_barang)
                     LEFT JOIN tbl_pelanggan c ON(p.id_pelanggan = c.id_pelanggan)';
 
-        $where = ['p.tgl_penjualan >=' => $tgl1, 'p.tgl_penjualan <=' => $tgl2];
+        $where = ['p.tgl_penjualan >=' => $tgl1, 'p.tgl_penjualan <=' => $tgl2, 'p.id_user' => $uuid];
 
         $this->db->select($select);
         $this->db->from($table);

@@ -40,7 +40,6 @@ class M_pegawai extends CI_Model
     {
 
         $this->db->from($this->table);
-        $this->db->where(['level' => 'pegawai']);
 
         $i = 0;
 

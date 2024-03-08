@@ -157,7 +157,7 @@ class Data_pegawai extends CI_Controller
                     'hp' => $this->security->xss_clean($this->input->post('hp', TRUE)),
                     'alamat' => $this->security->xss_clean($this->input->post('alamat', TRUE)),
                     'foto' => $foto,
-                    'level' => 'pegawai'
+                    'level' => $this->security->xss_clean($this->input->post('level', TRUE))
                 ];
 
                 //simpan data
@@ -187,7 +187,7 @@ class Data_pegawai extends CI_Controller
         //validasi admin
         $this->is_admin();
         //ambil data pegawai
-        $pegawai = $this->m_pegawai->getData('tbl_user', ['username' => $user, 'level' => 'pegawai']);
+        $pegawai = $this->m_pegawai->getData('tbl_user', ['username' => $user]);
         //validasi jumlah data
         if ($pegawai->num_rows() != 1) {
             redirect('pegawai');
@@ -210,7 +210,7 @@ class Data_pegawai extends CI_Controller
             redirect('pegawai');
         }
         //ambil data pegawai
-        $pegawai = $this->m_pegawai->getData('tbl_user', ['username' => $user, 'level' => 'pegawai']);
+        $pegawai = $this->m_pegawai->getData('tbl_user', ['username' => $user]);
         //validasi jumlah data
         if ($pegawai->num_rows() != 1) {
             redirect('pegawai');

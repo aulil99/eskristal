@@ -70,7 +70,7 @@ if ($this->session->flashdata('alert')) {
             }
         } else {
             echo '<tr>';
-            echo '<td colspan="8" class="text-center">Data tidak ditemukan</td>';
+            echo '<td colspan="11" class="text-center">Data tidak ditemukan</td>';
             echo '</tr>';
         }
         ?>

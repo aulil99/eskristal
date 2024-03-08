@@ -20,9 +20,9 @@
     </div>
 
     <div class="form-group row">
-        <label for="fullname" class="col-sm-3 col-form-label">Fullname</label>
+        <label for="fullname" class="col-sm-3 col-form-label">Nama Lengkap</label>
         <div class="col-sm-9">
-            <input type="text" class="form-control form-control-sm <?= (form_error('fullname')) ? 'is-invalid' : ''; ?>" id="fullname" name="fullname" placeholder="Fullname" value="<?= set_value('fullname'); ?>">
+            <input type="text" class="form-control form-control-sm <?= (form_error('fullname')) ? 'is-invalid' : ''; ?>" id="fullname" name="fullname" placeholder="Nama Lengkap..." value="<?= set_value('fullname'); ?>">
             <div class="invalid-feedback">
                 <?= form_error('fullname', '<p class="error-message">', '</p>'); ?>
             </div>
@@ -52,10 +52,21 @@
     <div class="form-group row">
         <label for="alamat" class="col-sm-3 col-form-label">Alamat</label>
         <div class="col-sm-9">
-            <textarea class="form-control form-control-sm <?= (form_error('alamat')) ? 'is-invalid' : ''; ?>" id="alamat" rows="2" name="alamat" placeholder="Alamat Pegawai"><?= set_value('alamat'); ?></textarea>
+            <textarea class="form-control form-control-sm <?= (form_error('alamat')) ? 'is-invalid' : ''; ?>" id="alamat" rows="2" name="alamat" placeholder="Alamat Pengguna"><?= set_value('alamat'); ?></textarea>
             <div class="invalid-feedback">
                 <?= form_error('alamat', '<p class="error-message">', '</p>'); ?>
             </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="level" class="col-sm-3 col-form-label">Jenis Pengguna</label>
+        <div class="col-sm-9">
+            <select class="custom-select custom-select-sm" id="level" name="level" id="level">
+                <option value="" disabled selected>Pilih Jenis Pengguna</option>
+                <option value="agen">Agen</option>
+                <option value="pegawai">Pegawai</option>
+            </select>
         </div>
     </div>
 
