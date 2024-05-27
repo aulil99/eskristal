@@ -102,6 +102,16 @@ class Data_pegawai extends CI_Controller
                 )
             );
 
+            $this->form_validation->set_rules(
+                'level',
+                'Jenis Pengguna',
+                'required|min_length[2]',
+                array(
+                    'required' => '{field} wajib diisi',
+                    'min_length' => '{field} minimal 2 karakter'
+                )
+            );
+
             //jika data sudah valid, maka jalankan proses penyimpanan data
             if ($this->form_validation->run() == TRUE) {
 
