@@ -44,6 +44,7 @@ class Data_pengiriman extends CI_Controller
 
         ];
 
+
         $this->template->kasir('pengiriman/retur_barang', $data);
     }
 
