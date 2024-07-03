@@ -320,11 +320,9 @@ class Penjualan extends CI_Controller
             $this->form_validation->set_rules(
                 'id',
                 'Barang',
-                'required|min_length[5]|max_length[6]',
+                'required',
                 array(
                     'required' => '{field} wajib dipilih',
-                    'min_length' => '{field} tidak valid',
-                    'max_length' => '{field} tidak valid'
                 )
             );
 
@@ -383,11 +381,9 @@ class Penjualan extends CI_Controller
             $this->form_validation->set_rules(
                 'id',
                 'Barang',
-                'required|min_length[4]|max_length[6]',
+                'required',
                 array(
                     'required' => '{field} wajib dipilih',
-                    'min_length' => 'Isi {field} tidak valid',
-                    'max_length' => 'Isi {field} tidak valid',
                 )
             );
 
