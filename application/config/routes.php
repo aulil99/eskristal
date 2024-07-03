@@ -140,5 +140,10 @@ $route['tambah_pelanggan'] = 'pelanggan/tambah_pelanggan';
 $route['edit_pelanggan/(:any)'] = 'pelanggan/edit_pelanggan/$1';
 $route['hapus_pelanggan'] = 'pelanggan/hapus_data';
 
+//route hutang
+$route['hutang'] = 'hutang/index';
+$route['tambah_hutang'] = 'hutang/tambah_hutang';
+$route['edit_hutang/(:any)'] = 'hutang/edit_hutang/$1';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

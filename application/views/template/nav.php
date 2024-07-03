@@ -34,6 +34,12 @@
                     </a>
                 </li>
 
+                <li <?= (in_array(strtolower($this->uri->segment(1)), ['hutang'])) ? 'class="active"' : ''; ?>>
+                    <a href="<?= site_url('hutang'); ?>">
+                        <i class="fa fa-credit-card"></i> Hutang
+                    </a>
+                </li>
+
                 <li <?= (in_array(strtolower($this->uri->segment(1)), ['laporan_pengiriman'])) ? 'class="active"' : ''; ?>>
                     <a href="<?= site_url('laporan_pengiriman'); ?>">
                         <i class="fa fa-file-text-o"></i>Laporan Pengiriman
@@ -44,7 +50,7 @@
             ?>
 
             <?php
-            //tampilkan menu di bawah ini jika yang login admin
+            //tampilkan menu di bawah ini jika yang login agen
             if ($this->session->userdata('level') == 'agen') :
             ?>
                 <li <?= (in_array(strtolower($this->uri->segment(1)), ['barang', 'tambah_barang', 'edit_barang'])) ? 'class="active"' : ''; ?>>
