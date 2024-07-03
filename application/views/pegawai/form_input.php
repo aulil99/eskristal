@@ -62,11 +62,14 @@
     <div class="form-group row">
         <label for="level" class="col-sm-3 col-form-label">Jenis Pengguna</label>
         <div class="col-sm-9">
-            <select class="custom-select custom-select-sm" id="level" name="level" id="level">
+            <select class="custom-select custom-select-sm <?= (form_error('level')) ? 'is-invalid' : ''; ?>" id="level" name="level">
                 <option value="" disabled selected>Pilih Jenis Pengguna</option>
                 <option value="agen">Agen</option>
                 <option value="pegawai">Pegawai</option>
             </select>
+            <div class="invalid-feedback">
+                <?= form_error('level', '<p class="error-message">', '</p>'); ?>
+            </div>
         </div>
     </div>
 
