@@ -11,6 +11,7 @@ class Penjualan extends CI_Controller
         //load model
         $this->load->model('m_penjualan');
         $this->load->model('m_pelanggan');
+        $this->load->model('m_pengiriman');
 
         header('Last-Modified:' . gmdate('D, d M Y H:i:s') . 'GMT');
         header('Cache-Control: no-cache, must-revalidate, max-age=0');
@@ -710,22 +711,28 @@ class Penjualan extends CI_Controller
             $no = $_POST['start'];
 
             foreach ($list as $i) {
+                $pengiriman = $this->m_pengiriman->getData('tbl_pengiriman', [
+                    'id_penjualan' => $i->id_penjualan,
+                    'user_id' => $this->session->userdata('UserID')
+                ]);
+                $rowData = $pengiriman->row();
+                $status = $rowData->status;
 
                 $button = '';
                 if ($this->session->userdata('level') == 'admin' || $this->session->userdata('UserID') == $i->id_user) :
-
+                    if ($status !== 'berhasil') :
                     $button .= '<a href="' . site_url('edit_penjualan/' . $i->id_penjualan) . '" class="btn btn-warning btn-sm text-white">Edit</a>
                         <button type="button" class="btn btn-danger btn-sm"onclick="hapus_penjualan(\'' . $i->id_penjualan . '\')">Hapus</button>';
-
+                    endif;
                 endif;
 
                 $no++;
                 $row = array();
                 $row[] = $no;
-                $row[] = $i->id_penjualan;
+                $row[] = $i->id_penjualan;  
                 $row[] = $this->tanggal_indo($i->tgl_penjualan);
                 $row[] = $i->nama_pembeli;
-                $row[] = $i->jumlah;
+                $row[] = $i->jumlah . ' jenis';
                 $row[] = '<span class="pr-3">' . number_format($i->total, 0, ',', '.') . ',-</span>';
                 $row[] = $i->fullname;
                 $row[] = '<a href="' . site_url('data_penjualan/' . $i->id_penjualan) . '" class="btn btn-sm btn-success">Detail</a>
