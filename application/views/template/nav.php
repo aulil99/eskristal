@@ -28,7 +28,7 @@
                     <a href="<?= site_url('data_penjualan'); ?>"><i class="fa fa-reply"></i> Data Penjualan</a>
                 </li>
 
-                <li <?= (in_array(strtolower($this->uri->segment(1)), ['pengiriman', 'tambah_pengiriman', 'edit_pengiriman'])) ? 'class="active"' : ''; ?>>
+                <li <?= (in_array(strtolower($this->uri->segment(1)), ['pengiriman', 'tambah_pengiriman', 'edit_pengiriman',])) ? 'class="active"' : ''; ?>>
                     <a href="<?= site_url('pengiriman'); ?>">
                         <i class="fa fa-truck"></i> Pengiriman
                     </a>

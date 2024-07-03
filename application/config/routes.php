@@ -83,6 +83,9 @@ $route['tambah_pengiriman'] = 'data_pengiriman/tambah_pengiriman';
 $route['hapus_pengiriman'] = 'data_pengiriman/hapus_data';
 $route['edit_ongkir/(:any)'] = 'data_pengiriman/ubah_ongkir/$1';
 
+//route data retur
+$route['retur_barang'] = 'data_pengiriman/retur';
+
 //route data pembelian barang
 $route['data_pembelian'] = 'pembelian/index';
 $route['tambah_pembelian'] = 'pembelian/tambah_data';

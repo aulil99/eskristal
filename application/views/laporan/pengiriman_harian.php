@@ -30,6 +30,7 @@ if ($this->session->flashdata('alert')) {
             <i class="fa fa-print"></i> Cetak Laporan
         </a>
     </div>
+
 </div>
 <table class="table table-sm table-bordered mt-3">
     <thead class="thead-dark">

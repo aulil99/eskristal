@@ -1,12 +1,14 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
 <div class="row">
-    <div class="col-sm-12 col-md-10">
+    <div class="col-md-10 col-sm-12">
         <h4 class="mb-0"><i class="fa fa-truck"></i> Pengiriman</h4>
     </div>
     <div class="col-md-2 mb-3">
         <a href="<?= site_url('tambah_pengiriman'); ?>" class="btn btn-success btn-sm btn-block">Tambah Data</a>
+        <a href="<?= site_url('retur_barang'); ?>" class="btn btn-warning btn-sm btn-block">Retur Barang</a>
     </div>
+
 </div>
 <hr class="mt-0" />
 <?php

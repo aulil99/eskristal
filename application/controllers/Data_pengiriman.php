@@ -35,6 +35,18 @@ class Data_pengiriman extends CI_Controller
         $this->template->kasir('pengiriman/index', $data);
     }
 
+    public function retur()
+    {
+        $this->is_login();
+
+        $data = [
+            'title' => 'Tambah Retur Barang',
+
+        ];
+
+        $this->template->kasir('pengiriman/retur_barang', $data);
+    }
+
     public function ubah_ongkir($id)
     {
         $this->is_admin();
@@ -396,7 +408,7 @@ class Data_pengiriman extends CI_Controller
         } else {
             $uuid = $this->session->userdata('UserID');
         }
-        
+
         //validasi request ajax
         if ($this->input->is_ajax_request()) {
             //validasi
