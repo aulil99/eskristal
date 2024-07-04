@@ -45,6 +45,18 @@ class Hutang extends CI_Controller
         $this->template->kasir('hutang/form_input', $data);
     }
 
+    public function edit_hutang()
+    {
+        $this->is_login();
+
+        $data = [
+            'title' => 'Tambah Hutang',
+        ];
+
+        $this->template->kasir('hutang/form_edit', $data);
+    }
+
+
     private function is_admin()
     {
         if (!$this->session->userdata('level') || $this->session->userdata('level') != 'admin') {
