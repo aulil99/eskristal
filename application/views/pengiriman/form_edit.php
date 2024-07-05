@@ -1,8 +1,11 @@
 <?php defined('BASEPATH') or exit('No direct script access allowed'); ?>
 
 <div class="row">
-    <div class="col-sm-12 col-md-10">
+    <div class="col-md-10 col-sm-12">
         <h4 class="mb-0"><i class="fa fa-truck"></i> Edit Data Pengiriman</h4>
+    </div>
+    <div class="col-md-2 mb-3">
+        <a href="<?= site_url('edit_penjualan/') . $data->id_penjualan; ?>" class="btn btn-warning btn-sm btn-block">Retur Barang</a>
     </div>
 </div>
 <hr class="mt-0" />
@@ -19,7 +22,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="form-group row">
         <label for="id_penjualan" class="col-sm-3 col-form-label">Nama Pembeli</label>
         <div class="col-sm-9">
@@ -33,7 +36,7 @@
             </select>
         </div>
     </div>
-    
+
     <div class="form-group row">
         <label for="kurir" class="col-sm-3 col-form-label">Kurir</label>
         <div class="col-sm-9">
@@ -81,6 +84,7 @@
             <select class="form-control form-control-sm <?= (form_error('status')) ? 'is-invalid' : ''; ?>" id="status" name="status" placeholder="status" id="status" style="text-transform: capitalize;">
                 <option selected value="<?= (set_value('status')) ? set_value('status') : $data->status; ?>"><?= $data->status; ?></option>
                 <option value="berhasil">Berhasil</option>
+                <option value="retur">Retur</option>
                 <option value="gagal">Gagal</option>
             </select>
             <div class="invalid-feedback">

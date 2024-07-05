@@ -143,7 +143,7 @@ $route['hapus_pelanggan'] = 'pelanggan/hapus_data';
 //route hutang
 $route['hutang'] = 'hutang/index';
 $route['tambah_hutang'] = 'hutang/tambah_hutang';
-$route['edit_hutang'] = 'hutang/edit_hutang';
+$route['edit_hutang/(:any)'] = 'hutang/edit_hutang/$1';
 
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

@@ -148,6 +148,24 @@ class M_laporan extends CI_Model
         return $this->db->get();
     }
 
+    function getDataHutang($idP, $uuid)
+    {
+        $select = 'p.id_penjualan AS id_penjualan, nama_barang, brand, dp.harga AS harga, qty, nama_pembeli, c.jenis AS jenis, (SELECT COUNT(*) FROM tbl_detail_penjualan WHERE id_penjualan = p.id_penjualan) AS row';
+
+        $table = 'tbl_penjualan p
+                    JOIN tbl_detail_penjualan dp ON(p.id_penjualan = dp.id_penjualan)
+                    LEFT JOIN tbl_barang b ON(dp.id_barang = b.kode_barang)
+                    LEFT JOIN tbl_pelanggan c ON(p.id_pelanggan = c.id_pelanggan)';
+
+        $where = ['p.id_penjualan' => $idP, 'p.id_user' => $uuid, 'p.status' => 'hutang'];
+
+        $this->db->select($select);
+        $this->db->from($table);
+        $this->db->where($where);
+
+        return $this->db->get();
+    }
+
     function getDataPenjualanHarian($tanggal, $uuid)
     {
         $select = 'p.id_penjualan AS id_penjualan, nama_barang, brand, dp.harga AS harga, qty, nama_pembeli, c.jenis AS jenis, (SELECT COUNT(*) FROM tbl_detail_penjualan WHERE id_penjualan = p.id_penjualan) AS row';
@@ -157,7 +175,7 @@ class M_laporan extends CI_Model
                     LEFT JOIN tbl_barang b ON(dp.id_barang = b.kode_barang)
                     LEFT JOIN tbl_pelanggan c ON(p.id_pelanggan = c.id_pelanggan)';
 
-        $where = ['p.tgl_penjualan' => $tanggal, 'p.id_user' => $uuid];
+        $where = ['p.tgl_penjualan' => $tanggal, 'p.id_user' => $uuid, 'p.status' => 'lunas'];
 
         $this->db->select($select);
         $this->db->from($table);
@@ -178,7 +196,7 @@ class M_laporan extends CI_Model
                     LEFT JOIN tbl_barang b ON(dp.id_barang = b.kode_barang)
                     LEFT JOIN tbl_pelanggan c ON(p.id_pelanggan = c.id_pelanggan)';
 
-        $where = ['p.tgl_penjualan >=' => $tgl1, 'p.tgl_penjualan <=' => $tgl2, 'p.id_user' => $uuid];
+        $where = ['p.tgl_penjualan >=' => $tgl1, 'p.tgl_penjualan <=' => $tgl2, 'p.id_user' => $uuid, 'p.status' => 'lunas'];
 
         $this->db->select($select);
         $this->db->from($table);

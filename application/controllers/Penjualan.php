@@ -56,12 +56,22 @@ class Penjualan extends CI_Controller
                 )
             );
 
+            $this->form_validation->set_rules(
+                'status',
+                'Status',
+                "required",
+                array(
+                    'required' => '{field} wajib diisi',
+                )
+            );
+
             if ($this->form_validation->run() == TRUE) {
 
                 $id = 'ID' . time();
                 $tgl = date('Y-m-d', strtotime(str_replace('/', '-', $this->security->xss_clean($this->input->post('tanggal', TRUE)))));
                 $pembeli = $this->security->xss_clean($this->input->post('pembeli', TRUE));
                 $user = $this->session->userdata('UserID');
+                $status = $this->security->xss_clean($this->input->post('status', TRUE));
 
                 $plg = $this->m_pelanggan->getData('tbl_pelanggan', ['nama' => $pembeli]);
                 $dataPlg = $plg->row();
@@ -71,6 +81,7 @@ class Penjualan extends CI_Controller
                     'id_pelanggan' => $dataPlg->id_pelanggan,
                     'tgl_penjualan' => $tgl,
                     'nama_pembeli' => $pembeli,
+                    'status' => $status,
                     'id_user' => $user
                 ];
                 //baca cart dan memasukkannya dalam array untuk disimpan
@@ -720,7 +731,7 @@ class Penjualan extends CI_Controller
 
                 $button = '';
                 if ($this->session->userdata('level') == 'admin' || $this->session->userdata('UserID') == $i->id_user) :
-                    if ($status !== 'berhasil') :
+                    if ($i->status == "hutang" || $status == 'gagal') :
                     $button .= '<a href="' . site_url('edit_penjualan/' . $i->id_penjualan) . '" class="btn btn-warning btn-sm text-white">Edit</a>
                         <button type="button" class="btn btn-danger btn-sm"onclick="hapus_penjualan(\'' . $i->id_penjualan . '\')">Hapus</button>';
                     endif;

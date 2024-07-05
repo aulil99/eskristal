@@ -36,7 +36,7 @@
 
                 <li <?= (in_array(strtolower($this->uri->segment(1)), ['hutang'])) ? 'class="active"' : ''; ?>>
                     <a href="<?= site_url('hutang'); ?>">
-                        <i class="fa fa-credit-card"></i> Hutang
+                        <i class="fa fa-credit-card-alt mr-1"></i> Hutang
                     </a>
                 </li>
 

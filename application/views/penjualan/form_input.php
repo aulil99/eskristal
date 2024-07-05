@@ -26,7 +26,7 @@
     <div class="form-group row">
         <label for="nama_pelanggan" class="col-sm-2 col-form-label">Nama Pelanggan</label>
         <div class="col-sm-6">
-            <select class="custom-select custom-select-sm" id="nama_pelanggan" name="pembeli" id="pembeli">
+            <select class="custom-select custom-select-sm" id="nama_pelanggan" name="pembeli">
                 <option value="" disabled selected>Pilih Nama Pelanggan</option>
                 <?php foreach ($pelanggan->result() as $p) : ?>
                     <option value="<?= $p->nama; ?>">
@@ -60,6 +60,16 @@
         <label for="jumlahx" class="col-sm-2 col-form-label">Jumlah Beli</label>
         <div class="col-sm-2">
             <input type="text" class="form-control form-control-sm qty" id="jumlahx" placeholder="Jumlah Beli">
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="status" class="col-sm-2 col-form-label">Status Pembayaran</label>
+        <div class="col-sm-6">
+            <select class="custom-select custom-select-sm" id="status" name="status">
+                <option value="" disabled selected>Pilih Status Pembayaran</option>
+                <option value="hutang">Belum Bayar</option>
+                <option value="lunas">Lunas</option>
+            </select>
         </div>
     </div>
     <div class="form-group row">

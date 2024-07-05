@@ -6,7 +6,6 @@
     </div>
     <div class="col-md-2 mb-3">
         <a href="<?= site_url('tambah_pengiriman'); ?>" class="btn btn-success btn-sm btn-block">Tambah Data</a>
-        <a href="<?= site_url('retur_barang'); ?>" class="btn btn-warning btn-sm btn-block">Retur Barang</a>
     </div>
 
 </div>
