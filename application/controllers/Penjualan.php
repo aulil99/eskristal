@@ -239,10 +239,12 @@ class Penjualan extends CI_Controller
                 $idP = $this->security->xss_clean($this->input->post('idP', TRUE));
                 $tgl = date('Y-m-d', strtotime(str_replace('/', '-', $this->input->post('tanggal', TRUE))));
                 $pembeli = $this->security->xss_clean($this->input->post('pembeli', TRUE));
+                $status = $this->security->xss_clean($this->input->post('status', TRUE));
 
                 $data_penjualan = [
                     'tgl_penjualan' => $tgl,
-                    'nama_pembeli' => $pembeli
+                    'nama_pembeli' => $pembeli,
+                    'status' => $status
                 ];
 
                 //baca cart dan memasukkannya dalam array untuk disimpan

@@ -64,6 +64,16 @@
         </div>
     </div>
     <div class="form-group row">
+        <label for="status" class="col-sm-2 col-form-label">Status Pembayaran</label>
+        <div class="col-sm-6">
+            <select class="custom-select custom-select-sm" id="status" name="status">
+                <option value="<?= $fdata->status; ?>" disabled selected><?= $fdata->status == 'hutang' ? 'Belum Bayar' : "Lunas"; ?></option>
+                <option value="hutang">Belum Bayar</option>
+                <option value="lunas">Lunas</option>
+            </select>
+        </div>
+    </div>
+    <div class="form-group row">
         <div class="col-sm-3 offset-sm-2">
             <div id="rowid-field"></div>
             <div id="btn-act">
